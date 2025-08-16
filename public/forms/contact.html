@@ -1,35 +1,26 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Contact • InnovateHub</title>
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;margin:0;background:#fff;color:#111}
-    main{min-height:70vh;max-width:720px;margin:0 auto;padding:4rem 1.25rem}
-    h1{font-size:2rem;font-weight:800;margin:0 0 1rem}
-    p{opacity:.85;margin:.5rem 0 1rem}
-    label{display:block;margin:.25rem 0 .75rem}
-    input,textarea{width:100%;padding:.6rem;border:1px solid #dcdcdc;border-radius:.5rem}
-    button{background:#0b2e1f;color:#fff;padding:.75rem 1.25rem;border-radius:999px;border:0;cursor:pointer}
-    button:hover{opacity:.95}
-  </style>
+  <title>Contact | InnovateHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;max-width:720px;margin:3rem auto;padding:0 1rem}</style>
 </head>
 <body>
-  <main>
-    <h1>Contact</h1>
-    <p>Tell us about your project.</p>
+  <h1>Contact</h1>
+  <p>Tell us about your project.</p>
 
-    <!-- Netlify Forms: static HTML version -->
-    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/success.html">
-      <input type="hidden" name="form-name" value="contact" />
-      <p hidden><label>Don’t fill this out: <input name="bot-field" /></label></p>
+  <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/success.html">
+    <input type="hidden" name="form-name" value="contact" />
+    <p style="display:none">
+      <label>Don’t fill this out: <input name="bot-field" /></label>
+    </p>
 
-      <label>Name<br /><input name="name" required /></label>
-      <label>Email<br /><input name="email" type="email" required /></label>
-      <label>Message<br /><textarea name="message" rows="5" required></textarea></label>
-      <button type="submit">Send</button>
-    </form>
-  </main>
+    <p><label>Name<br/><input name="name" required style="width:100%;padding:.6rem"/></label></p>
+    <p><label>Email<br/><input name="email" type="email" required style="width:100%;padding:.6rem"/></label></p>
+    <p><label>Message<br/><textarea name="message" rows="6" required style="width:100%;padding:.6rem"></textarea></label></p>
+
+    <p><button type="submit" style="background:#0b2e1f;color:#fff;padding:.75rem 1.25rem;border-radius:9999px">Send</button></p>
+  </form>
 </body>
 </html>

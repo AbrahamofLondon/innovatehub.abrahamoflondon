@@ -8,3 +8,5 @@ dist/
 node_modules/
 .next/
 25.2/
+node_modules/
+.next/
