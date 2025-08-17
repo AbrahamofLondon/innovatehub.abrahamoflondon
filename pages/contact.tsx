@@ -1,6 +1,7 @@
 import Head from "next/head";
 
-const AOF_URL = process.env.NEXT_PUBLIC_AOF_URL || "https://abrahamoflondon.org";
+const AOF_URL =
+  process.env.NEXT_PUBLIC_AOF_URL || "https://abrahamoflondon.org";
 
 export default function Contact() {
   return (
@@ -9,9 +10,10 @@ export default function Contact() {
         <title>Contact — InnovateHub by Abraham of London</title>
         <meta
           name="description"
-          content="Contact InnovateHub, a venture by Abraham of London, for product strategy support. Inquiries for Alomarad or Enduleluxe are also welcome."
+          content="Contact InnovateHub for product strategy and durable execution. We also handle enquiries for Alomarada (advisory for investors & African-diaspora founders) and Endureluxe (premium, sustainable fitness partnerships)."
         />
         <meta name="theme-color" content="#0b2e1f" />
+        <link rel="canonical" href="https://innovatehub.abrahamoflondon.org/contact" />
       </Head>
 
       <main className="wrap">
@@ -22,14 +24,25 @@ export default function Contact() {
         <header className="hero">
           <h1>Contact InnovateHub</h1>
           <p className="lead">
-            Reach out for product strategy support, or specify if your inquiry relates to Alomarad (ethical development) or Enduleluxe (performance design). We respond within 2–3 working days.
+            Tell us where you are, what you’re building, and what “durable”
+            looks like for you. If your note concerns{" "}
+            <strong>Alomarada</strong> (investor advisory & mentoring African-diaspora
+            entrepreneurs) or <strong>Endureluxe</strong> (premium, sustainable
+            fitness partnerships & community), mention it in the message.
+            We typically reply within 2–3 business days.
           </p>
         </header>
 
-        <iframe src="/forms/contact.html" title="Contact form" className="iframe" />
+        {/* Netlify hosted form (keeps Next build simple) */}
+        <iframe
+          src="/forms/contact.html"
+          title="Contact form"
+          className="iframe"
+        />
 
         <p className="fallback">
-          Trouble seeing the form? <a href="/forms/contact.html">Open it in a new tab</a>.
+          Trouble seeing the form?{" "}
+          <a href="/forms/contact.html">Open it in a new tab</a>.
         </p>
       </main>
 
@@ -47,8 +60,8 @@ export default function Contact() {
           color: var(--ink);
         }
         .badge {
-          font-size: 0.9rem;
-          opacity: 0.8;
+          font-size: 0.95rem;
+          opacity: 0.85;
           margin-bottom: 1rem;
         }
         .badge a {
@@ -56,7 +69,7 @@ export default function Contact() {
           text-decoration: underline;
         }
         .hero h1 {
-          font-family: Georgia, 'Times New Roman', serif;
+          font-family: Georgia, "Times New Roman", serif;
           font-size: clamp(2rem, 6vw, 3rem);
           line-height: 1.05;
           margin: 0 0 0.5rem;
@@ -64,8 +77,8 @@ export default function Contact() {
         }
         .lead {
           font-size: clamp(1.05rem, 2.5vw, 1.2rem);
-          max-width: 60ch;
-          opacity: 0.9;
+          max-width: 62ch;
+          opacity: 0.92;
           margin: 0 0 1rem;
         }
         .iframe {
