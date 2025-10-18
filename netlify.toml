@@ -1,20 +1,14 @@
 [build]
-# Use the recommended command for CI/CD environments
-command = "npm ci && npm run build"
-# CRITICAL FIX: The correct publish directory for Next.js output 
-# when using the Netlify plugin is simply .next.
-publish = ".next"
+  # CRITICAL: Ensures the Next.js build is run
+  command = "npm ci && npm run build"
+  
+  # CRITICAL: This is the correct directory for the Netlify Next.js plugin
+  publish = ".next"
 
-# Specify a recent, stable Node.js version. 
-environment = { NODE_VERSION = "20" }
+  # Ensures a modern, stable Node.js version is used
+  environment = { NODE_VERSION = "20" }
 
 
+# This section automatically enables the Next.js build capabilities
 [[plugins]]
-# Essential plugin for Next.js features (ISR, dynamic routing, etc.)
-package = "@netlify/plugin-nextjs"
-
-# 💥 FIX APPLIED HERE: The [build] section that followed must be 
-# on a completely new line below the plugin configuration.
-
-[build] # This line must be on its own line, not immediately after the package name.
-# ... (and then the rest of your original [build] settings if you intended to duplicate them)
+  package = "@netlify/plugin-nextjs"
