@@ -12,4 +12,18 @@
 
 [[plugins]]
   # Essential plugin for Next.js features (ISR, dynamic routing, etc.)
+  package = "@netlify/plugin-nextjs"[build]
+  # Use the recommended command for CI/CD environments
+  command = "npm ci && npm run build"
+  
+  # 💥 CRITICAL FIX: The correct publish directory for Next.js output 
+  # when using the Netlify plugin is simply .next (even with standalone output).
+  publish = ".next"
+
+  # Specify a recent, stable Node.js version. 
+  environment = { NODE_VERSION = "20" }
+
+
+[[plugins]]
+  # Essential plugin for Next.js features (ISR, dynamic routing, etc.)
   package = "@netlify/plugin-nextjs"
