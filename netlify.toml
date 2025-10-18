@@ -1,29 +1,20 @@
 [build]
-  # Use the recommended command for CI/CD environments
-  command = "npm ci && npm run build"
-  
-  # 💥 CRITICAL FIX: Change publish directory for 'standalone' output
-  # Next.js standalone output expects this path for Netlify's Next.js plugin
-  publish = ".next/static" # This directs Netlify to the correct static asset folder
+# Use the recommended command for CI/CD environments
+command = "npm ci && npm run build"
+# CRITICAL FIX: The correct publish directory for Next.js output 
+# when using the Netlify plugin is simply .next.
+publish = ".next"
 
-  # Specify a recent, stable Node.js version. 
-  environment = { NODE_VERSION = "20" }
-
-
-[[plugins]]
-  # Essential plugin for Next.js features (ISR, dynamic routing, etc.)
-  package = "@netlify/plugin-nextjs"[build]
-  # Use the recommended command for CI/CD environments
-  command = "npm ci && npm run build"
-  
-  # 💥 CRITICAL FIX: The correct publish directory for Next.js output 
-  # when using the Netlify plugin is simply .next (even with standalone output).
-  publish = ".next"
-
-  # Specify a recent, stable Node.js version. 
-  environment = { NODE_VERSION = "20" }
+# Specify a recent, stable Node.js version. 
+environment = { NODE_VERSION = "20" }
 
 
 [[plugins]]
-  # Essential plugin for Next.js features (ISR, dynamic routing, etc.)
-  package = "@netlify/plugin-nextjs"
+# Essential plugin for Next.js features (ISR, dynamic routing, etc.)
+package = "@netlify/plugin-nextjs"
+
+# 💥 FIX APPLIED HERE: The [build] section that followed must be 
+# on a completely new line below the plugin configuration.
+
+[build] # This line must be on its own line, not immediately after the package name.
+# ... (and then the rest of your original [build] settings if you intended to duplicate them)
