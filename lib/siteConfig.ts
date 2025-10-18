@@ -10,7 +10,6 @@ export type SocialLink = {
   label: string;
   icon: string;
   external?: boolean;
-  // PREMIUM TOUCH: Add a color code for potential use in UIs
   color?: string; 
 };
 
@@ -22,8 +21,7 @@ export type Venture = {
   href: string;
   cta: string;
   muted?: boolean;
-  // PREMIUM TOUCH: Add a distinct color for the venture's logo/theme
-  themeColor?: string;
+  themeColor?: string; // Used for dynamic styling in BrandCard
 };
 
 export type SiteConfig = {
@@ -38,7 +36,6 @@ export type SiteConfig = {
   twitterImage: string;
   authorImage: string;
   ventures: Venture[];
-  // PREMIUM TOUCH: Add a general site background color variable
   themeBackground: string; 
 };
 
@@ -48,12 +45,10 @@ export type SiteConfig = {
 
 // Helper to determine the base URL more cleanly
 const getSiteUrl = () => {
-    // Netlify recommended variables
     if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
     if (process.env.URL) return process.env.URL;
     if (process.env.DEPLOY_PRIME_URL) return process.env.DEPLOY_PRIME_URL;
     
-    // Fallback for local development or general testing
     return "https://abraham-of-london.netlify.app"; 
 }
 
@@ -64,7 +59,6 @@ export const siteConfig = {
   description:
     "Official site of Abraham of London — author, strategist, and fatherhood advocate.",
   
-  // Cleaned up logic for URL determination
   siteUrl: getSiteUrl(), 
 
   socialLinks: [
@@ -74,7 +68,7 @@ export const siteConfig = {
     { href: "https://x.com/AbrahamAda48634", label: "X", icon: "/assets/images/social/twitter.svg", external: true, color: "#000000" },
     { href: "https://www.facebook.com/share/1MRrKpUzMG/", label: "Facebook", icon: "/assets/images/social/facebook.svg", external: true, color: "#1877F2" },
     { href: "https://wa.me/447496334022", label: "WhatsApp", icon: "/assets/images/social/whatsapp.svg", external: true, color: "#25D366" },
-  ] as const, // Use 'as const' for strong type inference
+  ] as const, 
 
   gaMeasurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || null,
   email: "info@abrahamoflondon.org",
@@ -82,7 +76,6 @@ export const siteConfig = {
   twitterImage: "/assets/images/social/twitter-image.webp",
   authorImage: "/assets/images/profile/abraham-of-london.jpg",
   
-  // Added site-wide theme color
   themeBackground: "#f7f5ee", 
 
   ventures: [
@@ -92,16 +85,16 @@ export const siteConfig = {
       description: "Strategic stewardship, thought leadership, and the standards that hold the family together.",
       href: "https://www.abrahamoflondon.org",
       cta: "Visit",
-      themeColor: "#0b2e1f", // Forest
+      themeColor: "#002E6E", // Deep Blue
     },
     {
       initials: "IH",
       title: "InnovateHub",
       description: "Product and service strategy and hands-on build support for founders who want to trade with integrity and pace.",
-      href: "https://innovatehub.abrahamoflondon.org", // Updated to a real URL structure
+      href: "https://innovatehub.abrahamoflondon.org", 
       cta: "You’re here",
       muted: true,
-      themeColor: "#174b35", // A lighter green
+      themeColor: "#174b35", // A lighter green (InnovateHub's accent)
     },
     {
       initials: "AL",
@@ -109,7 +102,7 @@ export const siteConfig = {
       description: "Business advisory guiding investors and mentoring African-diaspora entrepreneurs to develop African markets through ethical exploration of market gaps—with a practical commitment to unlocking the continent’s staggering human capital.",
       href: "https://alomarada.com",
       cta: "Learn more",
-      themeColor: "#005a8d", // A deep blue
+      themeColor: "#D35400", // Earthy Orange/Brown
     },
     {
       initials: "EL",
@@ -117,19 +110,14 @@ export const siteConfig = {
       description: "Premium, sustainable fitness partnerships that promote wellbeing—powered by community and thoughtful technology, and complemented by writing that advances state-of-the-art knowledge and practical life wisdom.",
       href: "https://endureluxe.com",
       cta: "Discover",
-      themeColor: "#5c4033", // A warm earth tone
+      themeColor: "#5C6A72", // Muted Grey/Slate
     },
-  ] as const, // Use 'as const' for strong type inference
-// The satisfies utility ensures the shape matches SiteConfig 
+  ] as const,
 } satisfies Omit<SiteConfig, "siteUrl" | "socialLinks" | "ventures"> & {
     siteUrl: string;
     socialLinks: readonly SocialLink[];
     ventures: readonly Venture[];
 };
-
-// -----------------------------------------------------------------------------
-// 3. UTILITY FUNCTION
-// -----------------------------------------------------------------------------
 
 /**
  * Returns a full URL for the given path.

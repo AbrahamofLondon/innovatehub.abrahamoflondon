@@ -3,42 +3,74 @@
 import Link from "next/link";
 import { Venture } from "@/lib/siteConfig";
 
-export function BrandCard({ initials, title, description, href, cta, muted }: Venture) {
+const DEFAULT_BRAND_COLOR = "#0b2e1f"; // Your primary forest green
+
+export function BrandCard({ initials, title, description, href, cta, muted, themeColor }: Venture) {
   const isExternal = href.startsWith("http");
+  const accentColor = themeColor || DEFAULT_BRAND_COLOR;
+  
+  const dynamicStyle = {
+    '--card-accent-color': accentColor,
+  } as React.CSSProperties; 
+
   return (
     <article
-      // Use md:grid for a side-by-side layout on medium screens and up
+      style={dynamicStyle}
       className={`
-        relative rounded-2xl border bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl
-        md:grid md:grid-cols-[64px_1fr] md:gap-5
-        ${muted ? "opacity-75" : "hover:scale-[1.01]"}
+        relative rounded-2xl border border-gray-100 bg-white p-6 shadow-xl transition-all duration-300
+        md:grid md:grid-cols-[64px_1fr] md:gap-5 group
+        ${muted 
+          ? "opacity-75 cursor-default" 
+          : "hover:shadow-2xl hover:border-[var(--card-accent-color)] hover:ring-2 hover:ring-[var(--card-accent-color)]/30"
+        }
       `}
     >
       {/* Logo/Initials Container */}
       <div
         className={`
           flex h-16 w-16 items-center justify-center rounded-xl 
-          bg-gradient-to-br from-forest to-green-800 font-extrabold tracking-wide text-white text-lg
-          ${muted ? "opacity-75" : ""}
+          font-extrabold tracking-wide text-white text-lg
+          ${muted ? "opacity-75" : "group-hover:shadow-lg"}
         `}
+        style={{ backgroundColor: accentColor }}
       >
         {initials}
       </div>
 
       {/* Content */}
       <div className="mt-4 md:mt-0">
-        <h3 className="font-serif text-xl font-bold text-forest">{title}</h3>
+        <h3 
+          className="font-serif text-xl font-bold" 
+          style={{ color: accentColor }}
+        >
+          {title}
+        </h3>
         <p className="mt-1 text-base text-gray-700">{description}</p>
+        
         <Link
           href={href}
-          // Added margin top and strong hover effects
           className={`
-            mt-3 inline-block text-base font-bold text-forest underline transition hover:text-green-800
-            ${muted ? "pointer-events-none opacity-50" : ""}
+            mt-3 inline-block text-base font-bold underline transition duration-200
+            ${muted 
+              ? "pointer-events-none opacity-40 text-gray-500" 
+              : "hover:no-underline hover:brightness-110"
+            }
           `}
+          style={{ color: accentColor }}
           {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         >
           {cta}
+          {isExternal && !muted && (
+            <svg 
+              className="w-4 h-4 inline ml-1 -mt-0.5" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24" 
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+            </svg>
+          )}
         </Link>
       </div>
     </article>

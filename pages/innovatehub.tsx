@@ -6,7 +6,6 @@ import { siteConfig } from "@/lib/siteConfig";
 import { BrandCard } from "@/components/BrandCard";
 
 const earlyAccessForm = "/forms/early-access.html";
-// Assuming AOF_URL is available through siteConfig or ENV
 const AOF_URL = siteConfig.socialLinks.find(link => link.label === "Abraham of London")?.href || "/";
 
 
@@ -21,7 +20,6 @@ export default function InnovateHub() {
     parentOrganization: {
       "@type": "Organization",
       name: siteConfig.author,
-      // Use the explicit AOF URL for the parent organization
       url: AOF_URL, 
     },
     sameAs: siteConfig.socialLinks.map((link) => link.href),
@@ -51,23 +49,30 @@ export default function InnovateHub() {
         />
       </Head>
 
-      {/* Increased py padding on mobile for more space, ensuring max-w-5xl is respected */}
       <main className="mx-auto max-w-5xl px-4 py-16 md:py-24"> 
         
         <p className="mb-4 text-sm opacity-85">
-          {/* Changed link destination to AOF_URL and added underline style */}
           A venture by <a href={AOF_URL} className="text-green-950 underline hover:no-underline">{siteConfig.author}</a> 
         </p>
 
-        {/* Hero */}
+        {/* Hero: Now featuring the world-class logo */}
         <header className="py-8">
-          {/* Enhanced marker for depth */}
-          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-green-950 to-green-800 font-extrabold tracking-wide text-white shadow-xl" aria-hidden="true">
-            IH
+          
+          {/* Replaced old IH div and H1 with a single <img> tag */}
+          <div className="mb-6">
+            <img 
+              // Assumed path based on provided filename "unnamed-4.jpg" 
+              src="/assets/logos/innovatehub-logo-full.jpg" 
+              alt="InnovateHub logo: geometric mark with blue and red accents, by Abraham of London"
+              // Controls the size for a prominent, yet balanced, hero element
+              className="w-full max-w-sm h-auto" 
+            />
           </div>
-          <h1 className="font-serif text-5xl font-extrabold leading-tight text-green-950 md:text-6xl">
-            InnovateHub
-          </h1>
+
+          {/* This H1 is crucial for SEO and screen readers since the logo image 
+              contains the primary visual heading. We use sr-only to hide it visually. */}
+          <h1 className="sr-only">InnovateHub</h1> 
+
           <p className="mt-4 max-w-xl text-xl opacity-90 md:text-2xl">
             Tools, playbooks, and hands-on support to ship{" "}
             <em className="inline-block border-b-2 border-b-green-800/25 font-normal not-italic">
@@ -77,14 +82,12 @@ export default function InnovateHub() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4">
-            {/* Primary Button: Added hover transform and shadow */}
             <Link 
               href={earlyAccessForm} 
               className="rounded-full bg-green-950 px-6 py-3 font-bold text-white transition-all duration-200 hover:bg-green-800 hover:shadow-lg transform hover:-translate-y-0.5"
             >
               Get Early Access
             </Link>
-            {/* Secondary Button: Added hover transform and shadow */}
             <Link 
               href={AOF_URL} 
               className="rounded-full border border-gray-200 bg-white px-6 py-3 font-bold text-green-950 transition-all duration-200 hover:bg-gray-50 hover:shadow-md transform hover:-translate-y-0.5"
@@ -128,9 +131,7 @@ export default function InnovateHub() {
           <h2 className="font-serif text-3xl font-bold text-green-950 mb-6">
             The Abraham of London Family
           </h2>
-          {/* Increased gap between cards */}
           <div className="mt-4 grid gap-6 md:grid-cols-2">
-            {/* Note: BrandCard component is assumed to handle its own premium styling */}
             {siteConfig.ventures.map((venture) => (
               <BrandCard key={venture.title} {...venture} />
             ))}
@@ -145,7 +146,6 @@ export default function InnovateHub() {
           </p>
           <Link
             href={earlyAccessForm}
-            // Primary button style with strong hover effect
             className="mt-6 inline-block rounded-full bg-green-950 px-8 py-3 text-lg font-bold text-white transition-all duration-200 hover:bg-green-800 hover:shadow-xl transform hover:-translate-y-0.5"
           >
             Request Access
@@ -158,7 +158,6 @@ export default function InnovateHub() {
             <Link href="/" className="text-green-950 hover:underline">Home</Link>
             <Link href={earlyAccessForm} className="text-green-950 hover:underline">Early Access</Link>
             <Link href="/contact" className="text-green-950 hover:underline">Contact</Link>
-            {/* Link explicitly to AOF URL */}
             <a href={AOF_URL} className="text-green-950 hover:underline">Abraham of London</a>
           </nav>
           <p className="mt-4 text-sm opacity-70">

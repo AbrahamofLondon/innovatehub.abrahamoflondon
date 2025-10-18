@@ -1,0 +1,19 @@
+/* styles/globals.css (or app/globals.css) */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* OPTIONAL: Add any custom global styles here. 
+  For a world-class site, ensure scroll behavior is smooth.
+*/
+:root {
+  scroll-behavior: smooth;
+}
+
+/* OPTIONAL: Define a class for the custom serif font 
+  if you want to apply it globally or to specific sections.
+*/
+.font-serif-custom {
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
