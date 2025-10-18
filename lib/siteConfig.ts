@@ -68,6 +68,8 @@ export const siteConfig = {
     { href: "https://x.com/AbrahamAda48634", label: "X", icon: "/assets/images/social/twitter.svg", external: true, color: "#000000" },
     { href: "https://www.facebook.com/share/1MRrKpUzMG/", label: "Facebook", icon: "/assets/images/social/facebook.svg", external: true, color: "#1877F2" },
     { href: "https://wa.me/447496334022", label: "WhatsApp", icon: "/assets/images/social/whatsapp.svg", external: true, color: "#25D366" },
+    // 💥 FIX: Add the parent brand link so its label is available to AOF_URL lookup 💥
+    { href: "https://www.abrahamoflondon.org", label: "Abraham of London", icon: "", external: true, color: "" },
   ] as const, 
 
   gaMeasurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || null,

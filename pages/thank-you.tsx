@@ -12,7 +12,8 @@ export default function ThankYouPage() {
   const defaultReplyTime = "within 2 business days"; // Standard professional touch
 
   return (
-    <Layout pageTitle="Message Received">
+    // 💥 FIX: Changed pageTitle to the correct prop name: title 💥
+    <Layout title="Message Received"> 
       <Head>
         <title>Message Received | {siteConfig.author}</title>
         <meta name="description" content="Your message has been received by Abraham of London and we will reply soon." />
@@ -29,7 +30,7 @@ export default function ThankYouPage() {
           
           {/* Premium Touch: Icon/Visual */}
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-forest mb-4">
-             <Check className="h-8 w-8 text-cream" aria-hidden="true" />
+              <Check className="h-8 w-8 text-cream" aria-hidden="true" />
           </div>
           
           <h1 className="text-4xl md:text-5xl font-serif font-extrabold text-forest tracking-tight">
