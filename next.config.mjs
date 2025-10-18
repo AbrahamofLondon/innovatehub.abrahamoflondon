@@ -1,26 +1,24 @@
 // next.config.js
 
-/** @type {import('next').NextConfig} */
 const nextConfig = {
-  // ... other configs (like reactStrictMode: true, output: 'standalone')
+  // ... other configs (reactStrictMode, output: 'standalone')
 
-  // 💥 CRITICAL FIX: FORCE ASSET PREFIX TO ROOT (/)
-  // This is essential for a Next.js app on a custom subdomain/subpath 
-  // with Netlify to correctly load the compiled CSS and static images.
+  // Set assetPrefix to '/' as previously agreed
   assetPrefix: '/', 
 
+  // 💥 FINAL ATTEMPT FIX: Forcing a unique public path for assets
+  publicRuntimeConfig: {
+    // Use a unique, versioned folder name (e.g., 'v1')
+    publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
+  },
+
   images: {
-    // Setting unoptimized: true is the best practice when using HTML <img> tags 
-    // for logos and is essential for deployment stability.
     unoptimized: true, 
     formats: ['image/avif', 'image/webp'],
   },
   
-  // Setting the public base path to match the asset prefix for consistency
-  env: {
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://innovatehub.abrahamoflondon.org',
-    NEXT_PUBLIC_BASE_PATH: '/', 
-  },
+  // ... other environment variables
 };
 
-export default nextConfig;
+// Use the correct export syntax (export default or module.exports)
+module.exports = nextConfig;
