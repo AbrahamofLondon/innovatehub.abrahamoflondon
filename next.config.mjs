@@ -21,4 +21,4 @@ const nextConfig = {
 };
 
 // Use the correct export syntax (export default or module.exports)
-module.exports = nextConfig;
+export default nextConfig;
