@@ -1,12 +1,12 @@
 [build]
   # Use the recommended command for CI/CD environments
   command = "npm ci && npm run build"
-  # Specify the publish directory for Next.js output
-  publish = ".next"
+  
+  # 💥 CRITICAL FIX: Change publish directory for 'standalone' output
+  # Next.js standalone output expects this path for Netlify's Next.js plugin
+  publish = ".next/static" # This directs Netlify to the correct static asset folder
 
-  # --- PREMIUM DEPLOYMENT ENHANCEMENT ---
   # Specify a recent, stable Node.js version. 
-  # This ensures compatibility with modern Next.js and TypeScript versions.
   environment = { NODE_VERSION = "20" }
 
 
