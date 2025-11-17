@@ -27,6 +27,34 @@ export type Venture = {
   featured?: boolean;
 };
 
+/**
+ * Enumerate all "canonical" routes you actually support.
+ * Add to this union instead of sprinkling string paths around the codebase.
+ */
+export type RouteId =
+  | "home"
+  | "about"
+  | "blogIndex"
+  | "contentIndex"
+  | "booksIndex"
+  | "ventures"
+  | "downloadsIndex"
+  | "strategyLanding"
+  | "contact"
+  | "innovateHubAbout"
+  | "innovateHubHome";
+
+/**
+ * Route configuration – minimal but explicit.
+ */
+export interface RouteConfig {
+  id: RouteId;
+  /** Canonical pathname, ALWAYS starting with "/" */
+  path: string;
+  /** Optional human label (for nav) */
+  label?: string;
+}
+
 export type SiteConfig = {
   title: string;
   author: string;
@@ -54,6 +82,10 @@ export type SiteConfig = {
     mission: string;
     values: string[];
   };
+  // Route configuration
+  routes: Record<RouteId, RouteConfig>;
+  // Page title helper method
+  getPageTitle: (pageTitle?: string) => string;
 };
 
 // -----------------------------------------------------------------------------
@@ -68,6 +100,15 @@ const getSiteUrl = (): string => {
     
     return "https://www.abrahamoflondon.org";
 };
+
+// Venture URLs
+const INNOVATEHUB_URL =
+  process.env.NEXT_PUBLIC_INNOVATEHUB_URL ||
+  process.env.NEXT_PUBLIC_INNOVATEHUB_ALT_URL ||
+  "https://innovatehub.abrahamoflondon.org";
+
+const ALOMARADA_URL =
+  process.env.NEXT_PUBLIC_ALOMARADA_URL || "https://alomarada.com";
 
 export const siteConfig = {
   title: "Abraham of London",
@@ -155,7 +196,7 @@ export const siteConfig = {
       initials: "IH",
       title: "InnovateHub",
       description: "Product and service strategy and hands-on build support for founders who want to trade with integrity and pace. Innovation consulting and capability building.",
-      href: "https://innovatehub.abrahamoflondon.org", 
+      href: INNOVATEHUB_URL, 
       cta: "Visit InnovateHub",
       themeColor: "#174b35",
       status: "active",
@@ -166,7 +207,7 @@ export const siteConfig = {
       initials: "AL",
       title: "Alomarada",
       description: "Business advisory guiding investors and mentoring African-diaspora entrepreneurs to develop African markets through ethical exploration of market gaps—with a practical commitment to unlocking the continent's staggering human capital.",
-      href: "https://alomarada.com",
+      href: ALOMARADA_URL,
       cta: "Visit Alomarada",
       themeColor: "#D35400",
       status: "active", 
@@ -219,13 +260,167 @@ export const siteConfig = {
       "Excellence in execution",
       "Sustainable impact"
     ]
+  },
+
+  // Route configuration
+  routes: {
+    home: {
+      id: "home",
+      path: "/",
+      label: "Home",
+    },
+    about: {
+      id: "about",
+      path: "/about",
+      label: "About",
+    },
+    blogIndex: {
+      id: "blogIndex",
+      path: "/blog",
+      label: "Insights",
+    },
+    contentIndex: {
+      id: "contentIndex",
+      path: "/content",
+      label: "All Content",
+    },
+    booksIndex: {
+      id: "booksIndex",
+      path: "/books",
+      label: "Books",
+    },
+    ventures: {
+      id: "ventures",
+      path: "/ventures",
+      label: "Ventures",
+    },
+    downloadsIndex: {
+      id: "downloadsIndex",
+      path: "/downloads",
+      label: "Downloads",
+    },
+    strategyLanding: {
+      id: "strategyLanding",
+      path: "/strategy",
+      label: "Strategy",
+    },
+    contact: {
+      id: "contact",
+      path: "/contact",
+      label: "Contact",
+    },
+    innovateHubAbout: {
+      id: "innovateHubAbout",
+      path: "/about",
+      label: "About",
+    },
+    innovateHubHome: {
+      id: "innovateHubHome",
+      path: "/",
+      label: "Home",
+    },
+  },
+
+  // Page title helper method
+  getPageTitle: (pageTitle?: string): string => {
+    const base = siteConfig.title || "Abraham of London";
+    if (!pageTitle || typeof pageTitle !== "string") return base;
+    return `${pageTitle} | ${base}`;
   }
+
 } satisfies SiteConfig;
+
+// -----------------------------------------------------------------------------
+// 3. HELPER FUNCTIONS
+// -----------------------------------------------------------------------------
+
+/**
+ * Normalise a path – always leading slash, no trailing slash (except "/").
+ */
+function normalisePath(raw: string): string {
+  const s = String(raw || "").trim();
+  if (!s) return "/";
+  const withLead = s.startsWith("/") ? s : `/${s}`;
+  if (withLead === "/") return "/";
+  return withLead.replace(/\/+$/u, "");
+}
+
+/**
+ * Look up the canonical path for a given route id.
+ */
+export function getRoutePath(id: RouteId): string {
+  const cfg = siteConfig.routes[id];
+  if (!cfg) {
+    if (process.env.NODE_ENV !== "production") {
+      // Fail loudly in dev so we don't ship broken links.
+      // eslint-disable-next-line no-console
+      console.warn(`[siteConfig] Unknown route id: ${id as string}`);
+    }
+    return "/";
+  }
+  return normalisePath(cfg.path);
+}
+
+/**
+ * Build an internal href from either a route id or a raw path.
+ */
+export function internalHref(target: RouteId | string): string {
+  // Handle RouteId case first
+  if (typeof target === "string" && target in siteConfig.routes) {
+    return getRoutePath(target as RouteId);
+  }
+  
+  // Handle string paths
+  if (typeof target === "string") {
+    // If it's already a proper path, normalize it
+    if (target.startsWith("/") || target.startsWith("#") || target.startsWith("mailto:") || target.startsWith("tel:")) {
+      return target;
+    }
+    // Otherwise treat as path fragment
+    return normalisePath(`/${target}`);
+  }
+  
+  // Handle RouteId directly
+  return getRoutePath(target);
+}
+
+/**
+ * Build an absolute URL safely (for OG tags, emails, sitemaps, etc.).
+ */
+export function absUrl(path: string | RouteId): string {
+  const href = typeof path === "string" ? internalHref(path) : getRoutePath(path);
+  if (/^https?:\/\//iu.test(href)) return href;
+  if (href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) return href;
+  return `${siteConfig.siteUrl}${href === "/" ? "" : href}`;
+}
+
+/**
+ * Compose a page title consistently.
+ */
+export function getPageTitle(pageTitle?: string): string {
+  const base = siteConfig.title || "Abraham of London";
+  if (!pageTitle || typeof pageTitle !== "string") return base;
+  return `${pageTitle} | ${base}`;
+}
+
+/**
+ * Check if a route is active (for navigation highlighting)
+ */
+export function isActiveRoute(currentPath: string, target: RouteId | string): boolean {
+  const targetPath = internalHref(target);
+  const normalizedCurrent = normalisePath(currentPath);
+  
+  if (targetPath === "/") {
+    return normalizedCurrent === "/";
+  }
+  
+  return normalizedCurrent.startsWith(targetPath);
+}
 
 /**
  * Returns a full URL for the given path.
  */
-export const absUrl = (path: string): string =>
+export const absUrlLegacy = (path: string): string =>
   `${siteConfig.siteUrl}${path.startsWith("/") ? "" : "/"}${path}`;
 
 /**
@@ -303,5 +498,20 @@ export const validateVenture = (venture: Venture): boolean => {
     venture.initials
   );
 };
+
+// Convenience exports for common routes
+export const routes = {
+  home: siteConfig.routes.home.path,
+  about: siteConfig.routes.about.path,
+  blog: siteConfig.routes.blogIndex.path,
+  content: siteConfig.routes.contentIndex.path,
+  books: siteConfig.routes.booksIndex.path,
+  ventures: siteConfig.routes.ventures.path,
+  downloads: siteConfig.routes.downloadsIndex.path,
+  strategy: siteConfig.routes.strategyLanding.path,
+  contact: siteConfig.routes.contact.path,
+  innovateHubAbout: siteConfig.routes.innovateHubAbout.path,
+  innovateHubHome: siteConfig.routes.innovateHubHome.path,
+} as const;
 
 export default siteConfig;
