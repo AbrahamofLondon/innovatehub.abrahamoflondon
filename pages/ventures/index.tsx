@@ -19,7 +19,7 @@ import {
 import Layout from "@/components/Layout";
 import { pickEnvUrl, ENV_KEYS } from "@/lib/utils";
 
-type VentureStatus = "Active" | "Emerging" | "In development";
+type VentureStatus = "Active" | "In development" | "In development";
 
 interface Venture {
   name: string;
