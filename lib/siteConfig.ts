@@ -24,7 +24,7 @@ export type Venture = {
   themeColor?: string; // Used for dynamic styling in BrandCard
   status?: "active" | "emerging" | "development" | "legacy";
   category?: "advisory" | "product" | "community" | "media";
-  featured?: boolean; // Fixed: changed from `false` to `boolean`
+  featured?: boolean;
 };
 
 export type SiteConfig = {
@@ -66,7 +66,7 @@ const getSiteUrl = (): string => {
     if (process.env.URL) return process.env.URL;
     if (process.env.DEPLOY_PRIME_URL) return process.env.DEPLOY_PRIME_URL;
     
-    return "https://www.abrahamoflondon.org"; // Updated to primary domain
+    return "https://www.abrahamoflondon.org";
 };
 
 export const siteConfig = {
@@ -82,12 +82,14 @@ export const siteConfig = {
       href: "mailto:info@abrahamoflondon.org", 
       label: "Email", 
       icon: "/assets/images/social/email.svg", 
+      external: false,
       color: "#DB4437" 
     },
     { 
       href: "tel:+442086225909", 
       label: "Phone", 
       icon: "/assets/images/social/phone.svg", 
+      external: false,
       color: "#0077B5" 
     },
     { 
@@ -123,7 +125,7 @@ export const siteConfig = {
       href: "https://www.abrahamoflondon.org", 
       label: "Abraham of London", 
       icon: "", 
-      external: true, 
+      external: false,
       color: "#002E6E" 
     },
   ] as const, 
@@ -136,7 +138,6 @@ export const siteConfig = {
   
   themeBackground: "#f7f5ee", 
 
-  // Updated ventures with correct URLs and enhanced metadata
   ventures: [
     {
       initials: "AØL",
@@ -145,7 +146,7 @@ export const siteConfig = {
       href: "https://www.abrahamoflondon.org",
       cta: "You're here",
       muted: true,
-      themeColor: "#002E6E", // Deep Blue
+      themeColor: "#002E6E",
       status: "active",
       category: "community",
       featured: true
@@ -156,7 +157,7 @@ export const siteConfig = {
       description: "Product and service strategy and hands-on build support for founders who want to trade with integrity and pace. Innovation consulting and capability building.",
       href: "https://innovatehub.abrahamoflondon.org", 
       cta: "Visit InnovateHub",
-      themeColor: "#174b35", // Forest Green
+      themeColor: "#174b35",
       status: "active",
       category: "advisory",
       featured: true
@@ -167,7 +168,7 @@ export const siteConfig = {
       description: "Business advisory guiding investors and mentoring African-diaspora entrepreneurs to develop African markets through ethical exploration of market gaps—with a practical commitment to unlocking the continent's staggering human capital.",
       href: "https://alomarada.com",
       cta: "Visit Alomarada",
-      themeColor: "#D35400", // Earthy Orange/Brown
+      themeColor: "#D35400",
       status: "active", 
       category: "advisory",
       featured: true
@@ -178,14 +179,13 @@ export const siteConfig = {
       description: "Premium, sustainable fitness partnerships that promote wellbeing—powered by community and thoughtful technology, and complemented by writing that advances state-of-the-art knowledge and practical life wisdom.",
       href: "https://alomarada.com/endureluxe",
       cta: "Explore Endureluxe",
-      themeColor: "#5C6A72", // Muted Grey/Slate
+      themeColor: "#5C6A72",
       status: "development",
       category: "product",
-      featured: false // Added missing featured property
+      featured: false
     },
   ] as const,
 
-  // New enhanced configuration
   keywords: [
     "Abraham of London",
     "fatherhood",
@@ -207,7 +207,6 @@ export const siteConfig = {
   copyright: `© ${new Date().getFullYear()} Abraham of London. All rights reserved.`,
   foundingYear: 2020,
 
-  // Enhanced brand identity
   brand: {
     name: "Abraham of London",
     tagline: "Strategic stewardship for generational impact",
@@ -225,7 +224,6 @@ export const siteConfig = {
 
 /**
  * Returns a full URL for the given path.
- * @param path The path of the URL (e.g., '/about', '/blog/my-post')
  */
 export const absUrl = (path: string): string =>
   `${siteConfig.siteUrl}${path.startsWith("/") ? "" : "/"}${path}`;
@@ -287,6 +285,13 @@ export const getPrimaryContact = (): { email: string; phone: string } => {
 };
 
 /**
+ * Check if a link should open externally
+ */
+export const shouldOpenExternally = (link: SocialLink): boolean => {
+  return link.external === true;
+};
+
+/**
  * Validate venture data structure
  */
 export const validateVenture = (venture: Venture): boolean => {
@@ -299,5 +304,4 @@ export const validateVenture = (venture: Venture): boolean => {
   );
 };
 
-// Export default configuration
 export default siteConfig;
