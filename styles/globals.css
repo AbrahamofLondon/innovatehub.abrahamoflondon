@@ -6,6 +6,12 @@
   scroll-behavior: smooth;
 }
 
+/* Subtle global polish */
+body {
+  @apply bg-black text-cream antialiased;
+}
+
+/* Optional serif utility if you still want it */
 .font-serif-custom {
-  font-family: 'Georgia', 'Times New Roman', serif;
+  font-family: "Georgia", "Times New Roman", serif;
 }
