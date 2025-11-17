@@ -1,38 +1,36 @@
 // components/Layout.tsx
+import type { ReactNode } from "react";
+import Head from "next/head";
 
-import React from 'react';
-import Head from 'next/head';
-
-// Define the props for the Layout component
 interface LayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
   title?: string;
   description?: string;
 }
 
 /**
- * A simple layout component to provide consistent structure,
- * Head metadata, and a footer/header if needed across pages.
+ * Global layout wrapper:
+ * - Provides consistent background and typography base.
+ * - Lets individual pages still control their own <Head> tags if they want.
  */
-const Layout: React.FC<LayoutProps> = ({ children, title = "InnovateHub", description = "World-class strategies and tools." }) => {
+const Layout = ({
+  children,
+  title = "Abraham of London",
+  description = "World-class strategies, ventures, and tools from Abraham of London.",
+}: LayoutProps) => {
   return (
     <>
       <Head>
-        {/* Set default title and description, can be overridden by props */}
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Fallback favicon – page can override with its own <Head> */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
-      {/* This is the main wrapper. We use the cream background color defined in tailwind.config.js 
-        and ensure the font is smooth (antialiased) for a premium look.
-      */}
+
+      {/* Site-wide frame */}
       <div className="min-h-screen bg-cream antialiased">
-        {/* Main Content Area */}
         <main>{children}</main>
-        
-        {/* You would typically include a Header and Footer component here */}
       </div>
     </>
   );
