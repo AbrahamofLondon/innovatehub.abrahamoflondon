@@ -32,10 +32,10 @@ interface Venture {
   externalLabel?: string;
 }
 
-// Resolve external URLs safely with env overrides
+// Safe URL resolution with environment variable fallbacks
 const ALOMARADA_URL = pickEnvUrl(
   [ENV_KEYS.ALOMARADA_URL],
-  "https://alomarada.com/"
+  "https://alomarada.com"
 );
 
 const ENDURELUXE_URL = pickEnvUrl(
@@ -86,22 +86,24 @@ const ventures: Venture[] = [
 
 const VenturesPage: NextPage = () => {
   const [isDark, setIsDark] = React.useState(true);
+  const [mounted, setMounted] = React.useState(false);
 
-  // Optional: read initial preference from system / localStorage
+  // Only run theme detection after component mounts to avoid hydration mismatch
   React.useEffect(() => {
+    setMounted(true);
     try {
-      const stored = window.localStorage.getItem("aof-theme");
+      const stored = localStorage.getItem("aof-theme");
       if (stored === "light" || stored === "dark") {
         setIsDark(stored === "dark");
         return;
       }
       // Fallback to system preference
       const prefersDark = window.matchMedia?.(
-        "(prefers-color-scheme: dark)",
+        "(prefers-color-scheme: dark)"
       ).matches;
       setIsDark(prefersDark);
     } catch {
-      // ignore
+      // ignore localStorage errors
     }
   }, []);
 
@@ -109,13 +111,22 @@ const VenturesPage: NextPage = () => {
     setIsDark((prev) => {
       const next = !prev;
       try {
-        window.localStorage.setItem("aof-theme", next ? "dark" : "light");
+        localStorage.setItem("aof-theme", next ? "dark" : "light");
       } catch {
-        // ignore
+        // ignore localStorage errors
       }
       return next;
     });
   };
+
+  // Avoid rendering theme-dependent content until mounted to prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <Layout title="Strategic Ventures | Abraham of London">
+        <div className="min-h-screen bg-gray-100" />
+      </Layout>
+    );
+  }
 
   const shellClass = isDark
     ? "min-h-screen bg-gradient-to-b from-black via-deepCharcoal to-black text-cream"
@@ -142,7 +153,7 @@ const VenturesPage: NextPage = () => {
               <h1 className="mt-3 font-serif text-3xl font-semibold md:text-4xl">
                 Strategic Ventures
               </h1>
-              <p className="mt-4 max-w-3xl text-base md:text-lg text-gray-200/90 dark:text-gray-200">
+              <p className="mt-4 max-w-3xl text-base md:text-lg text-gray-600 dark:text-gray-200">
                 Disciplined, faith-rooted initiatives built to create sustainable
                 impact, not just headlines. Every venture is a focused expression
                 of the same conviction: truth, responsibility, and legacy.
@@ -178,15 +189,15 @@ const VenturesPage: NextPage = () => {
           </div>
 
           {/* Ventures Grid */}
-          <section className="mb-16 grid gap-8 md:grid-cols-2">
+          <section className="mb-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {ventures.map((venture) => (
               <article
                 key={venture.slug ?? venture.name}
                 className={[
-                  "group rounded-2xl border p-7 transition-all duration-300",
+                  "group rounded-2xl border p-6 transition-all duration-300",
                   isDark
-                    ? "border-white/10 bg-white/5 hover:border-softGold/50 hover:bg-white/10 shadow-soft"
-                    : "border-lightGrey bg-white hover:border-forest/30 hover:shadow-xl",
+                    ? "border-white/10 bg-white/5 hover:border-softGold/50 hover:bg-white/10"
+                    : "border-lightGrey bg-white hover:border-forest/30 hover:shadow-lg",
                 ]
                   .filter(Boolean)
                   .join(" ")}
@@ -236,7 +247,7 @@ const VenturesPage: NextPage = () => {
                 <p
                   className={[
                     "mt-3 text-sm leading-relaxed",
-                    isDark ? "text-gray-200" : "text-slate-700",
+                    isDark ? "text-gray-300" : "text-slate-700",
                   ]
                     .filter(Boolean)
                     .join(" ")}
@@ -312,7 +323,7 @@ const VenturesPage: NextPage = () => {
                 </h3>
                 <p
                   className={
-                    isDark ? "text-sm text-gray-200" : "text-sm text-slate-700"
+                    isDark ? "text-sm text-gray-300" : "text-sm text-slate-700"
                   }
                 >
                   Every venture must align with our core mission: faith-rooted
@@ -341,7 +352,7 @@ const VenturesPage: NextPage = () => {
                 </h3>
                 <p
                   className={
-                    isDark ? "text-sm text-gray-200" : "text-sm text-slate-700"
+                    isDark ? "text-sm text-gray-300" : "text-sm text-slate-700"
                   }
                 >
                   We prioritise long-term value creation over quick wins.
@@ -370,7 +381,7 @@ const VenturesPage: NextPage = () => {
                 </h3>
                 <p
                   className={
-                    isDark ? "text-sm text-gray-200" : "text-sm text-slate-700"
+                    isDark ? "text-sm text-gray-300" : "text-sm text-slate-700"
                   }
                 >
                   We build ecosystems, not celebrity brands – brotherhoods,
