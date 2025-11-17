@@ -8,11 +8,6 @@ interface LayoutProps {
   description?: string;
 }
 
-/**
- * Global layout wrapper:
- * - Provides consistent background and typography base.
- * - Lets individual pages still control their own <Head> tags if they want.
- */
 const Layout = ({
   children,
   title = "Abraham of London",
@@ -24,11 +19,9 @@ const Layout = ({
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* Fallback favicon – page can override with its own <Head> */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Site-wide frame */}
       <div className="min-h-screen bg-cream antialiased">
         <main>{children}</main>
       </div>
