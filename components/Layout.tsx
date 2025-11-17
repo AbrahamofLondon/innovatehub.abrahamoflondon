@@ -1,8 +1,8 @@
-// components/Layout.tsx
-
+// components/Layout.tsx (with image logo)
 import type { ReactNode } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 
 interface LayoutProps {
   children: ReactNode;
@@ -30,37 +30,57 @@ const Layout = ({
         {/* Top bar */}
         <header className="border-b border-white/10 bg-black/60 backdrop-blur-sm">
           <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-            <Link href="/" className="flex items-baseline gap-2">
-              <span className="font-serif text-lg font-semibold tracking-wide">
-                Abraham of London
-              </span>
-              <span className="text-[0.7rem] uppercase tracking-[0.24em] text-softGold/80">
-                Ventures
-              </span>
+            {/* Logo with Image */}
+            <Link 
+              href="/" 
+              className="flex items-center gap-3 group transition-all duration-200 hover:scale-105"
+            >
+              {/* Replace with your actual logo path */}
+              <div className="relative w-10 h-10">
+                <Image
+                  src="/assets/logos/abraham-london-logo.png" // Update this path
+                  alt="Abraham of London"
+                  width={40}
+                  height={40}
+                  className="object-contain"
+                  priority
+                />
+              </div>
+              
+              <div className="flex flex-col">
+                <span className="font-serif text-xl font-semibold tracking-wide text-cream group-hover:text-softGold transition-colors">
+                  Abraham of London
+                </span>
+                <span className="text-[0.65rem] uppercase tracking-[0.3em] text-softGold/80 font-medium">
+                  Ventures
+                </span>
+              </div>
             </Link>
 
-            <nav className="flex items-center gap-5 text-sm text-gray-200">
-              <Link href="/ventures" className="hover:text-softGold">
+            <nav className="flex items-center gap-6 text-sm text-gray-200">
+              <Link href="/ventures" className="hover:text-softGold transition-colors duration-200 font-medium">
                 Ventures
               </Link>
-              <Link href="/innovatehub" className="hover:text-softGold">
+              <Link href="/innovatehub" className="hover:text-softGold transition-colors duration-200 font-medium">
                 InnovateHub
               </Link>
-              <Link href="/contact" className="hover:text-softGold">
+              <Link href="/contact" className="hover:text-softGold transition-colors duration-200 font-medium">
                 Contact
               </Link>
             </nav>
           </div>
         </header>
 
-        {/* Page body */}
+        {/* Rest remains the same */}
         <main className="mx-auto w-full max-w-6xl px-4 py-10 md:py-14">
           {children}
         </main>
 
-        {/* Footer */}
-        <footer className="border-t border-white/10 bg-black/70 py-4 text-center text-xs text-gray-300">
-          © {year} Abraham of London. All rights reserved.
+        <footer className="border-t border-white/10 bg-black/70 py-6 text-center text-sm text-gray-300">
+          <div className="max-w-6xl mx-auto px-4">
+            <p>© {year} Abraham of London. All rights reserved.</p>
+            <p className="mt-2 text-xs text-gray-400">Built with discipline, designed for legacy.</p>
+          </div>
         </footer>
       </div>
     </>

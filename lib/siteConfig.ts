@@ -24,7 +24,7 @@ export type Venture = {
   themeColor?: string; // Used for dynamic styling in BrandCard
   status?: "active" | "emerging" | "development" | "legacy";
   category?: "advisory" | "product" | "community" | "media";
-  featured?: false;
+  featured?: boolean; // Fixed: changed from `false` to `boolean`
 };
 
 export type SiteConfig = {
@@ -61,7 +61,7 @@ export type SiteConfig = {
 // -----------------------------------------------------------------------------
 
 // Helper to determine the base URL more cleanly
-const getSiteUrl = () => {
+const getSiteUrl = (): string => {
     if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
     if (process.env.URL) return process.env.URL;
     if (process.env.DEPLOY_PRIME_URL) return process.env.DEPLOY_PRIME_URL;
@@ -180,7 +180,8 @@ export const siteConfig = {
       cta: "Explore Endureluxe",
       themeColor: "#5C6A72", // Muted Grey/Slate
       status: "development",
-      category: "product"
+      category: "product",
+      featured: false // Added missing featured property
     },
   ] as const,
 
@@ -220,17 +221,13 @@ export const siteConfig = {
       "Sustainable impact"
     ]
   }
-} satisfies Omit<SiteConfig, "siteUrl" | "socialLinks" | "ventures"> & {
-    siteUrl: string;
-    socialLinks: readonly SocialLink[];
-    ventures: readonly Venture[];
-};
+} satisfies SiteConfig;
 
 /**
  * Returns a full URL for the given path.
  * @param path The path of the URL (e.g., '/about', '/blog/my-post')
  */
-export const absUrl = (path: string) =>
+export const absUrl = (path: string): string =>
   `${siteConfig.siteUrl}${path.startsWith("/") ? "" : "/"}${path}`;
 
 /**
@@ -247,7 +244,14 @@ export const getVenture = (slug: string): Venture | undefined => {
  * Get featured ventures (for homepage highlights)
  */
 export const getFeaturedVentures = (): readonly Venture[] => {
-  return siteConfig.ventures.filter(venture => venture.featured);
+  return siteConfig.ventures.filter(venture => venture.featured === true);
+};
+
+/**
+ * Get active ventures
+ */
+export const getActiveVentures = (): readonly Venture[] => {
+  return siteConfig.ventures.filter(venture => venture.status === "active");
 };
 
 /**
@@ -269,6 +273,30 @@ export const getVenturesByStatus = (status: Venture['status']): readonly Venture
  */
 export const getSocialLink = (label: string): SocialLink | undefined => {
   return siteConfig.socialLinks.find(link => link.label === label);
+};
+
+/**
+ * Get primary contact information
+ */
+export const getPrimaryContact = (): { email: string; phone: string } => {
+  const phoneLink = siteConfig.socialLinks.find(link => link.label === "Phone");
+  return {
+    email: siteConfig.email,
+    phone: phoneLink?.href.replace('tel:', '') || '+442086225909'
+  };
+};
+
+/**
+ * Validate venture data structure
+ */
+export const validateVenture = (venture: Venture): boolean => {
+  return Boolean(
+    venture.title &&
+    venture.description &&
+    venture.href &&
+    venture.cta &&
+    venture.initials
+  );
 };
 
 // Export default configuration
