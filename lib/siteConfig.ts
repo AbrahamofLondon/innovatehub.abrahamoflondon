@@ -22,9 +22,9 @@ export type Venture = {
   cta: string;
   muted?: boolean;
   themeColor?: string; // Used for dynamic styling in BrandCard
-  status?: "active" | "emerging" | "development" | "legacy";
+  status?: "In development" | "emerging" | "development" | "legacy";
   category?: "advisory" | "product" | "community" | "media";
-  featured?: boolean;
+  featured?: true;
 };
 
 export type SiteConfig = {
