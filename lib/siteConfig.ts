@@ -24,7 +24,7 @@ export type Venture = {
   themeColor?: string; // Used for dynamic styling in BrandCard
   status?: "active" | "emerging" | "development" | "legacy";
   category?: "advisory" | "product" | "community" | "media";
-  featured?: true;
+  featured?: false;
 };
 
 export type SiteConfig = {
