@@ -116,7 +116,7 @@ export const siteConfig = {
   description:
     "Official site of Abraham of London — author, strategist, and fatherhood advocate. Strategic ventures in advisory, innovation, and legacy building.",
   
-  siteUrl: getSiteUrl(), 
+  siteUrl: getSiteUrl().replace(/\/+$/, ""), // REMOVED /u flag here
 
   socialLinks: [
     { 
@@ -342,7 +342,7 @@ function normalisePath(raw: string): string {
   if (!s) return "/";
   const withLead = s.startsWith("/") ? s : `/${s}`;
   if (withLead === "/") return "/";
-  return withLead.replace(/\/+$/u, "");
+  return withLead.replace(/\/+$/, ""); // REMOVED /u flag here
 }
 
 /**
@@ -389,7 +389,7 @@ export function internalHref(target: RouteId | string): string {
  */
 export function absUrl(path: string | RouteId): string {
   const href = typeof path === "string" ? internalHref(path) : getRoutePath(path);
-  if (/^https?:\/\//iu.test(href)) return href;
+  if (/^https?:\/\//.test(href)) return href; // REMOVED /iu flags here
   if (href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) return href;
   return `${siteConfig.siteUrl}${href === "/" ? "" : href}`;
 }
