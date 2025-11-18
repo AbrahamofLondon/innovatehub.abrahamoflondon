@@ -1,28 +1,34 @@
 // lib/utils.ts
 
 /**
- * Environment variable keys for venture URLs
+ * Environment variable keys for venture URLs.
+ *
+ * NOTE:
+ * - These are the actual environment variable NAMES.
+ * - Values are expected to be full URLs (e.g. "https://alomarada.com").
  */
 export const ENV_KEYS = {
-  ALOMARADA_URL: 'NEXT_PUBLIC_ALOMARADA_URL',
-  ENDURELUXE_URL: 'NEXT_PUBLIC_ENDURELUXE_URL', 
-  INNOVATEHUB_URL: 'NEXT_PUBLIC_INNOVATEHUB_URL',
-  INNOVATEHUB_ALT_URL: 'NEXT_PUBLIC_INNOVATEHUB_ALT_URL',
+  ALOMARADA_URL: "NEXT_PUBLIC_ALOMARADA_URL",
+  ENDURELUXE_URL: "NEXT_PUBLIC_ENDURELUXE_URL",
+  INNOVATEHUB_URL: "NEXT_PUBLIC_INNOVATEHUB_URL",
+  INNOVATEHUB_ALT_URL: "NEXT_PUBLIC_INNOVATEHUB_ALT_URL",
 } as const;
 
+export type EnvKeyName = (typeof ENV_KEYS)[keyof typeof ENV_KEYS];
+
 /**
- * Safely picks the first available environment variable URL or returns default
+ * Safely picks the first available environment variable URL or returns default.
+ *
+ * Usage:
+ *   pickEnvUrl(
+ *     [ENV_KEYS.INNOVATEHUB_URL, ENV_KEYS.INNOVATEHUB_ALT_URL],
+ *     "https://innovatehub.abrahamoflondon.org"
+ *   )
  */
 export function pickEnvUrl(keys: string[], defaultUrl: string): string {
-  if (typeof window !== 'undefined') {
-    // Client-side: just return default to avoid build issues
-    return defaultUrl;
-  }
-
-  // Server-side: check environment variables
   for (const key of keys) {
     const value = process.env[key];
-    if (value && typeof value === 'string' && value.trim() !== '') {
+    if (value && typeof value === "string" && value.trim() !== "") {
       return value.trim();
     }
   }
@@ -30,22 +36,31 @@ export function pickEnvUrl(keys: string[], defaultUrl: string): string {
 }
 
 /**
- * Simple environment variable getter with fallback
+ * Simple environment variable getter with fallback.
+ *
+ * For NEXT_PUBLIC_* keys, this is safe on both server and client in Next.js.
  */
-export function getEnv(key: string, defaultValue: string = ''): string {
-  if (typeof window !== 'undefined') {
-    return defaultValue;
+export function getEnv(key: string, defaultValue: string = ""): string {
+  const value = process.env[key];
+  if (typeof value === "string" && value.trim() !== "") {
+    return value.trim();
   }
-  return process.env[key] || defaultValue;
+  return defaultValue;
 }
 
 /**
- * Type-safe environment variable access for ventures
+ * Type-safe environment variable access for ventures.
+ *
+ * Usage:
+ *   const alomaradaUrl = getVentureUrl(
+ *     "ALOMARADA_URL",
+ *     "https://alomarada.com"
+ *   );
  */
 export function getVentureUrl(
-  ventureKey: keyof typeof ENV_KEYS, 
+  ventureKey: keyof typeof ENV_KEYS,
   defaultValue: string
 ): string {
-  const key = ENV_KEYS[ventureKey];
-  return getEnv(key, defaultValue);
+  const envVarName = ENV_KEYS[ventureKey];
+  return getEnv(envVarName, defaultValue);
 }

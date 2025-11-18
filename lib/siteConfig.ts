@@ -1,5 +1,7 @@
 // lib/siteConfig.ts
 
+import { getVentureUrl } from "@/lib/utils";
+
 // -----------------------------------------------------------------------------
 // 1. TYPE DEFINITIONS
 // -----------------------------------------------------------------------------
@@ -26,8 +28,8 @@ export type Venture = {
 };
 
 /**
- * Enumerate all canonical routes supported by this app.
- * (InnovateHub is treated as an external microsite, so it's NOT included here.)
+ * Canonical route identifiers supported by this app.
+ * (InnovateHub is treated as an external microsite.)
  */
 export type RouteId =
   | "home"
@@ -95,14 +97,23 @@ const getSiteUrl = (): string => {
   return "https://www.abrahamoflondon.org";
 };
 
-// Venture URLs
-const INNOVATEHUB_URL =
-  process.env.NEXT_PUBLIC_INNOVATEHUB_URL ||
-  process.env.NEXT_PUBLIC_INNOVATEHUB_ALT_URL ||
-  "https://innovatehub.abrahamoflondon.org";
+const SITE_URL = getSiteUrl().replace(/\/+$/, "");
 
-const ALOMARADA_URL =
-  process.env.NEXT_PUBLIC_ALOMARADA_URL || "https://alomarada.com";
+// Venture URLs via env helpers
+const INNOVATEHUB_URL = getVentureUrl(
+  "INNOVATEHUB_URL",
+  "https://innovatehub.abrahamoflondon.org"
+);
+
+const ALOMARADA_URL = getVentureUrl(
+  "ALOMARADA_URL",
+  "https://alomarada.com"
+);
+
+const ENDURELUXE_URL = getVentureUrl(
+  "ENDURELUXE_URL",
+  "https://alomarada.com/endureluxe"
+);
 
 /**
  * Single source of truth for page title composition.
@@ -119,7 +130,7 @@ export const siteConfig = {
   description:
     "Official site of Abraham of London — author, strategist, and fatherhood advocate. Strategic ventures in advisory, innovation, and legacy building.",
 
-  siteUrl: getSiteUrl().replace(/\/+$/, ""),
+  siteUrl: SITE_URL,
 
   socialLinks: [
     {
@@ -166,7 +177,7 @@ export const siteConfig = {
     },
     // Primary brand link
     {
-      href: getSiteUrl().replace(/\/+$/, ""),
+      href: SITE_URL,
       label: "Abraham of London",
       icon: "",
       external: false,
@@ -188,7 +199,7 @@ export const siteConfig = {
       title: "Abraham of London",
       description:
         "Strategic stewardship, thought leadership, and the standards that hold the family together. Fatherhood advocacy, legacy building, and principled leadership.",
-      href: getSiteUrl().replace(/\/+$/, ""),
+      href: SITE_URL,
       cta: "You're here",
       muted: true,
       themeColor: "#002E6E",
@@ -225,7 +236,7 @@ export const siteConfig = {
       title: "Endureluxe",
       description:
         "A community-driven fitness and lifestyle venture uniting everyday athletes, founders, and professionals around disciplined training, sustainable health, and gear that can keep up.",
-      href: "https://alomarada.com/endureluxe",
+      href: ENDURELUXE_URL,
       cta: "Explore Endureluxe",
       themeColor: "#5C6A72",
       status: "development",
@@ -360,7 +371,7 @@ export function getRoutePath(id: RouteId): string {
  * Build an internal href from either a route id or a raw path.
  */
 export function internalHref(target: RouteId | string): string {
-  // RouteId case by key check
+  // RouteId by key check
   if (typeof target === "string" && (siteConfig.routes as Record<string, RouteConfig>)[target]) {
     return getRoutePath(target as RouteId);
   }
@@ -393,8 +404,9 @@ export function absUrl(path: string | RouteId): string {
     href.startsWith("#") ||
     href.startsWith("mailto:") ||
     href.startsWith("tel:")
-  )
+  ) {
     return href;
+  }
   return `${siteConfig.siteUrl}${href === "/" ? "" : href}`;
 }
 
