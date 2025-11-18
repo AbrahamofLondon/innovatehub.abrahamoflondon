@@ -1,14 +1,22 @@
 [build]
-  # CRITICAL: Ensures the Next.js build is run
-  command = "npm ci && npm run build"
-  
-  # CRITICAL: This is the correct directory for the Netlify Next.js plugin
+  command = "npm run build"
   publish = ".next"
 
-  # Ensures a modern, stable Node.js version is used
-  environment = { NODE_VERSION = "20" }
+[build.environment]
+  NODE_VERSION = "20"
 
-
-# This section automatically enables the Next.js build capabilities
+# Essential for Next.js on Netlify - use the official runtime
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Critical: Handle client-side routing for SPA behavior
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Optional: Force HTTPS
+[[redirects]]
+  from = "http://innovatehub.abrahamoflondon.org/*"
+  to = "https://innovatehub.abrahamoflondon.org/:splat"
+  status = 301
