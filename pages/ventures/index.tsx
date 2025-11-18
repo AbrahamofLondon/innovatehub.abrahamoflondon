@@ -1,5 +1,4 @@
 // pages/ventures/index.tsx
-
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -12,14 +11,12 @@ import {
   Target,
   TrendingUp,
   Users,
-  Moon,
-  SunMedium,
+  Globe2,
 } from "lucide-react";
 
 import Layout from "@/components/Layout";
-import { pickEnvUrl, ENV_KEYS } from "@/lib/utils";
 
-type VentureStatus = "Active" | "In development" | "In development";
+type VentureStatus = "Active" | "In development";
 
 interface Venture {
   name: string;
@@ -27,368 +24,258 @@ interface Venture {
   description: string;
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   href: string;
-  status: VentureStatus | string;
+  status: VentureStatus;
   focus: string;
   externalLabel?: string;
+  tagline?: string;
 }
-
-// Safe URL resolution with environment variable fallbacks
-const ALOMARADA_URL = pickEnvUrl(
-  [ENV_KEYS.ALOMARADA_URL],
-  "https://alomarada.com"
-);
-
-const ENDURELUXE_URL = pickEnvUrl(
-  [ENV_KEYS.ENDURELUXE_URL],
-  "https://alomarada.com/endureluxe"
-);
-
-const INNOVATEHUB_URL = pickEnvUrl(
-  [ENV_KEYS.INNOVATEHUB_URL, ENV_KEYS.INNOVATEHUB_ALT_URL],
-  "https://innovatehub.abrahamoflondon.org"
-);
 
 const ventures: Venture[] = [
   {
-    name: "Alomarada Ltd",
-    slug: "alomarada",
+    name: "Abraham of London",
     description:
-      "Board-level advisory, operating systems, and market-entry strategy for Africa-focused founders, boards, and institutions.",
-    icon: Building2,
-    href: ALOMARADA_URL,
+      "The narrative headquarters: story, philosophy, and the lens through which all ventures are built.",
+    icon: Users,
+    href: "https://abrahamoflondon.org",
     status: "Active",
-    focus: "Strategic Advisory & Market Systems",
-    externalLabel: "Visit Alomarada.com",
+    focus: "Thought leadership, fatherhood, strategy, and legacy content.",
+    externalLabel: "Visit main site",
+    tagline: "Where the worldview and voice are forged."
   },
   {
-    name: "Endureluxe",
-    slug: "endureluxe",
+    name: "Alomarada",
     description:
-      "Durable luxury performance gear for people who train, build, and endure – without compromising on quality or aesthetics.",
-    icon: PackageCheck,
-    href: ENDURELUXE_URL,
+      "Strategy and market-entry advisory for institutions operating in complex and emerging markets.",
+    icon: Building2,
+    href: "https://alomarada.com",
     status: "In development",
-    focus: "Performance & Durable Luxury",
-    externalLabel: "Explore Endureluxe",
+    focus: "Institutional advisory, market-entry strategy, and deal architecture.",
+    externalLabel: "View Alomarada",
+    tagline: "Turning context and constraints into strategic leverage."
   },
   {
     name: "InnovateHub",
-    slug: "innovatehub",
     description:
-      "Strategy, playbooks, and hands-on support to help founders test ideas, ship durable products, and stay accountable.",
+      "A build-space for serious founders and leaders who want clear thinking, disciplined execution, and integrity at the core of what they build.",
     icon: Lightbulb,
-    href: INNOVATEHUB_URL,
-    status: "Emerging",
-    focus: "Innovation & Capability Building",
-    externalLabel: "Visit InnovateHub",
+    href: "https://innovatehub.abrahamoflondon.org/about",
+    status: "Active",
+    focus: "Venture design, strategic clarity, and execution systems.",
+    externalLabel: "Explore InnovateHub",
+    tagline: "Where serious ideas mature into enduring ventures."
+  },
+  {
+    name: "Endureluxe",
+    description:
+      "A product venture focused on durable, high-performance goods—where design, endurance, and ethical supply meet.",
+    icon: PackageCheck,
+    href: "https://alomarada.com/endureluxe",
+    status: "In development",
+    focus: "Premium fitness and everyday performance gear, built to last.",
+    externalLabel: "Endureluxe overview",
+    tagline: "Sustainable performance, embodied in real products."
   },
 ];
 
+const statusOrder: VentureStatus[] = ["Active", "In development"];
+
 const VenturesPage: NextPage = () => {
-  const [isDark, setIsDark] = React.useState(true);
-  const [mounted, setMounted] = React.useState(false);
-
-  // Only run theme detection after component mounts to avoid hydration mismatch
-  React.useEffect(() => {
-    setMounted(true);
-    try {
-      const stored = localStorage.getItem("aof-theme");
-      if (stored === "light" || stored === "dark") {
-        setIsDark(stored === "dark");
-        return;
-      }
-      // Fallback to system preference
-      const prefersDark = window.matchMedia?.(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      setIsDark(prefersDark);
-    } catch {
-      // ignore localStorage errors
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    setIsDark((prev) => {
-      const next = !prev;
-      try {
-        localStorage.setItem("aof-theme", next ? "dark" : "light");
-      } catch {
-        // ignore localStorage errors
-      }
-      return next;
-    });
-  };
-
-  // Avoid rendering theme-dependent content until mounted to prevent hydration mismatch
-  if (!mounted) {
-    return (
-      <Layout title="Strategic Ventures | Abraham of London">
-        <div className="min-h-screen bg-gray-100" />
-      </Layout>
-    );
-  }
-
-  const shellClass = isDark
-    ? "min-h-screen bg-gradient-to-b from-black via-deepCharcoal to-black text-cream"
-    : "min-h-screen bg-gradient-to-b from-warmWhite via-white to-warmWhite text-ink";
+  const pageTitle = "Ventures";
 
   return (
-    <Layout title="Strategic Ventures | Abraham of London">
+    <Layout title={pageTitle}>
       <Head>
-        <title>Strategic Ventures | Abraham of London</title>
+        <title>{`Ventures | Abraham of London`}</title>
         <meta
           name="description"
-          content="Explore the strategic ventures and business initiatives under Abraham of London – Alomarada Ltd, Endureluxe, and InnovateHub."
+          content="A focused portfolio of ventures built around one core mandate: principled innovation that outlives the news cycle."
         />
       </Head>
 
-      <div className={shellClass}>
-        <div className="mx-auto flex max-w-6xl flex-col px-4 pb-20 pt-10">
-          {/* Header row: title + theme toggle */}
-          <div className="mb-10 flex items-start justify-between gap-4">
-            <div>
-              <p className="text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-softGold/80">
-                Abraham of London · Ventures
-              </p>
-              <h1 className="mt-3 font-serif text-3xl font-semibold md:text-4xl">
-                Strategic Ventures
-              </h1>
-              <p className="mt-4 max-w-3xl text-base md:text-lg text-gray-600 dark:text-gray-200">
-                Disciplined, faith-rooted initiatives built to create sustainable
-                impact, not just headlines. Every venture is a focused expression
-                of the same conviction: truth, responsibility, and legacy.
-              </p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-slate-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          {/* Hero */}
+          <header className="mb-12">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-blue-400 mb-3">
+              Ecosystem Overview
+            </p>
+            <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
+              One vision, multiple expressions.
+            </h1>
+            <p className="text-lg md:text-xl text-slate-300 max-w-3xl">
+              Each venture is a different instrument in the same orchestra—aligned by a single mandate:
+              build work that carries weight, respects people, and can survive pressure.
+            </p>
+          </header>
+
+          {/* Quick legend / framing strip */}
+          <section className="mb-10">
+            <div className="grid md:grid-cols-3 gap-4 text-sm">
+              <div className="rounded-2xl border border-slate-700 bg-slate-900/60 p-4 flex gap-3">
+                <Target className="h-5 w-5 text-blue-400 mt-0.5" />
+                <div>
+                  <h2 className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1">
+                    How to read this page
+                  </h2>
+                  <p className="text-slate-300">
+                    This is not a random portfolio. It’s a structured ecosystem: narrative, strategy, build, and proof.
+                  </p>
+                </div>
+              </div>
+              <div className="rounded-2xl border border-slate-700 bg-slate-900/60 p-4 flex gap-3">
+                <TrendingUp className="h-5 w-5 text-emerald-400 mt-0.5" />
+                <div>
+                  <h2 className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1">
+                    Status signals
+                  </h2>
+                  <p className="text-slate-300">
+                    <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-2 py-0.5 text-xs font-semibold text-emerald-300 mr-1">
+                      Active
+                    </span>
+                    is live and operational.
+                    <span className="inline-flex items-center rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-300 ml-2 mr-1">
+                      In development
+                    </span>
+                    is being quietly built or refined.
+                  </p>
+                </div>
+              </div>
+              <div className="rounded-2xl border border-slate-700 bg-slate-900/60 p-4 flex gap-3">
+                <Globe2 className="h-5 w-5 text-indigo-400 mt-0.5" />
+                <div>
+                  <h2 className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1">
+                    Where to start
+                  </h2>
+                  <p className="text-slate-300">
+                    Start with{" "}
+                    <span className="font-semibold text-slate-100">Abraham of London</span>{" "}
+                    for the worldview, then move into{" "}
+                    <span className="font-semibold text-slate-100">InnovateHub</span> if you&apos;re building.
+                  </p>
+                </div>
+              </div>
             </div>
-
-            {/* Light / dark toggle */}
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className={[
-                "inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold shadow-sm transition-all",
-                isDark
-                  ? "border-white/15 bg-white/5 text-cream hover:bg-white/10"
-                  : "border-lightGrey bg-white text-ink hover:bg-warmWhite",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-              aria-label="Toggle light/dark mode"
-            >
-              {isDark ? (
-                <>
-                  <SunMedium className="h-4 w-4" />
-                  <span>Light mode</span>
-                </>
-              ) : (
-                <>
-                  <Moon className="h-4 w-4" />
-                  <span>Dark mode</span>
-                </>
-              )}
-            </button>
-          </div>
-
-          {/* Ventures Grid */}
-          <section className="mb-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {ventures.map((venture) => (
-              <article
-                key={venture.slug ?? venture.name}
-                className={[
-                  "group rounded-2xl border p-6 transition-all duration-300",
-                  isDark
-                    ? "border-white/10 bg-white/5 hover:border-softGold/50 hover:bg-white/10"
-                    : "border-lightGrey bg-white hover:border-forest/30 hover:shadow-lg",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-              >
-                <div className="mb-5 flex items-start justify-between gap-4">
-                  <div
-                    className={[
-                      "rounded-xl p-3",
-                      isDark ? "bg-softGold/10" : "bg-forest/5",
-                    ]
-                      .filter(Boolean)
-                      .join(" ")}
-                  >
-                    <venture.icon
-                      className={
-                        isDark
-                          ? "h-6 w-6 text-softGold"
-                          : "h-6 w-6 text-forest"
-                      }
-                    />
-                  </div>
-                  <span
-                    className={[
-                      "rounded-full px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide",
-                      venture.status === "Active"
-                        ? isDark
-                          ? "bg-emerald-500/10 text-emerald-200"
-                          : "bg-emerald-100 text-emerald-800"
-                        : venture.status === "Emerging"
-                        ? isDark
-                          ? "bg-sky-500/10 text-sky-200"
-                          : "bg-sky-100 text-sky-800"
-                        : isDark
-                        ? "bg-amber-500/10 text-amber-200"
-                        : "bg-amber-100 text-amber-800",
-                    ]
-                      .filter(Boolean)
-                      .join(" ")}
-                  >
-                    {venture.status}
-                  </span>
-                </div>
-
-                <h2 className="font-serif text-xl font-semibold">
-                  {venture.name}
-                </h2>
-                <p
-                  className={[
-                    "mt-3 text-sm leading-relaxed",
-                    isDark ? "text-gray-300" : "text-slate-700",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                >
-                  {venture.description}
-                </p>
-
-                <div className="mt-5 flex items-center justify-between gap-3">
-                  <span
-                    className={[
-                      "text-xs font-medium uppercase tracking-[0.16em]",
-                      isDark ? "text-softGold/80" : "text-forest/80",
-                    ]
-                      .filter(Boolean)
-                      .join(" ")}
-                  >
-                    {venture.focus}
-                  </span>
-
-                  <Link
-                    href={venture.href}
-                    className={[
-                      "inline-flex items-center gap-1 rounded-full px-4 py-2 text-xs font-semibold transition-colors",
-                      isDark
-                        ? "bg-softGold/15 text-softGold hover:bg-softGold/25"
-                        : "bg-forest text-white hover:bg-forest/90",
-                    ]
-                      .filter(Boolean)
-                      .join(" ")}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>{venture.externalLabel ?? "Visit site"}</span>
-                    <ArrowRight className="h-3 w-3" />
-                  </Link>
-                </div>
-              </article>
-            ))}
           </section>
 
-          {/* Investment Philosophy */}
-          <section
-            className={[
-              "rounded-3xl border px-8 py-10 md:px-10 md:py-12",
-              isDark
-                ? "border-white/15 bg-white/5"
-                : "border-lightGrey bg-white",
-            ]
-              .filter(Boolean)
-              .join(" ")}
-          >
-            <h2 className="mb-8 text-center font-serif text-2xl font-semibold md:text-3xl">
-              Our Investment Philosophy
+          {/* Ventures grouped by status */}
+          {statusOrder.map((status) => {
+            const group = ventures.filter((v) => v.status === status);
+            if (group.length === 0) return null;
+
+            return (
+              <section key={status} className="mb-12">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl md:text-2xl font-semibold text-slate-50 flex items-center gap-2">
+                    {status === "Active" ? "Active ventures" : "In development"}
+                  </h2>
+                  <span
+                    className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold tracking-wide ${
+                      status === "Active"
+                        ? "border-emerald-500/60 bg-emerald-500/10 text-emerald-200"
+                        : "border-amber-400/60 bg-amber-500/10 text-amber-200"
+                    }`}
+                  >
+                    {group.length} {group.length === 1 ? "venture" : "ventures"}
+                  </span>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  {group.map((venture) => (
+                    <article
+                      key={venture.name}
+                      className="group rounded-2xl border border-slate-800 bg-slate-900/70 p-6 md:p-7 shadow-sm hover:shadow-xl hover:border-blue-500/70 transition-all"
+                    >
+                      <div className="flex items-start gap-4 mb-4">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-slate-800 border border-slate-700">
+                          <venture.icon className="h-5 w-5 text-blue-300" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex flex-wrap items-center gap-2 mb-1">
+                            <h3 className="text-lg md:text-xl font-semibold text-slate-50">
+                              {venture.name}
+                            </h3>
+                            <span
+                              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase ${
+                                venture.status === "Active"
+                                  ? "bg-emerald-500/10 text-emerald-200 border border-emerald-500/40"
+                                  : "bg-amber-500/10 text-amber-200 border border-amber-500/40"
+                              }`}
+                            >
+                              {venture.status}
+                            </span>
+                          </div>
+                          {venture.tagline && (
+                            <p className="text-xs uppercase tracking-[0.18em] text-blue-300">
+                              {venture.tagline}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      <p className="text-sm md:text-base text-slate-300 mb-3">
+                        {venture.description}
+                      </p>
+                      <p className="text-xs md:text-sm text-slate-400 mb-4">
+                        <span className="font-semibold text-slate-200">Focus:&nbsp;</span>
+                        {venture.focus}
+                      </p>
+
+                      <div className="flex items-center justify-between gap-3">
+                        <Link
+                          href={venture.href}
+                          target={venture.href.startsWith("http") ? "_blank" : undefined}
+                          rel={venture.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                          className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs md:text-sm font-semibold text-white shadow-lg hover:bg-blue-500 transition group"
+                        >
+                          {venture.externalLabel ?? "Open venture"}
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
+                        <div className="text-[11px] text-slate-500 text-right">
+                          <p>
+                            Built under the{" "}
+                            <span className="font-semibold text-slate-300">Abraham of London</span> mandate.
+                          </p>
+                          <p>One vision, expressed through multiple engines.</p>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            );
+          })}
+
+          {/* Final cross-venture CTA */}
+          <section className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/70 p-7 text-center">
+            <h2 className="text-lg md:text-xl font-semibold text-slate-50 mb-3">
+              Not sure where to plug in?
             </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              <div className="text-center">
-                <div
-                  className={[
-                    "mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full",
-                    isDark ? "bg-forest/30" : "bg-forest/10",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                >
-                  <Target
-                    className={
-                      isDark ? "h-6 w-6 text-softGold" : "h-6 w-6 text-forest"
-                    }
-                  />
-                </div>
-                <h3 className="mb-2 text-lg font-semibold">
-                  Strategic Alignment
-                </h3>
-                <p
-                  className={
-                    isDark ? "text-sm text-gray-300" : "text-sm text-slate-700"
-                  }
-                >
-                  Every venture must align with our core mission: faith-rooted
-                  leadership, disciplined strategy, and legacy building across
-                  generations.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div
-                  className={[
-                    "mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full",
-                    isDark ? "bg-softGold/25" : "bg-softGold/20",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                >
-                  <TrendingUp
-                    className={
-                      isDark ? "h-6 w-6 text-softGold" : "h-6 w-6 text-forest"
-                    }
-                  />
-                </div>
-                <h3 className="mb-2 text-lg font-semibold">
-                  Sustainable Impact
-                </h3>
-                <p
-                  className={
-                    isDark ? "text-sm text-gray-300" : "text-sm text-slate-700"
-                  }
-                >
-                  We prioritise long-term value creation over quick wins.
-                  Ventures are designed to be cashflow-aware, scalable, and
-                  principled.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div
-                  className={[
-                    "mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full",
-                    isDark ? "bg-forest/30" : "bg-forest/10",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                >
-                  <Users
-                    className={
-                      isDark ? "h-6 w-6 text-softGold" : "h-6 w-6 text-forest"
-                    }
-                  />
-                </div>
-                <h3 className="mb-2 text-lg font-semibold">
-                  Community Focus
-                </h3>
-                <p
-                  className={
-                    isDark ? "text-sm text-gray-300" : "text-sm text-slate-700"
-                  }
-                >
-                  We build ecosystems, not celebrity brands – brotherhoods,
-                  advisory circles, and operating systems that outlast any one
-                  individual.
-                </p>
-              </div>
+            <p className="text-sm md:text-base text-slate-300 mb-4 max-w-2xl mx-auto">
+              Start with the{" "}
+              <span className="font-semibold text-slate-100">Abraham of London</span> platform to get the
+              full context, then move into{" "}
+              <span className="font-semibold text-slate-100">InnovateHub</span> if you&apos;re actively building.
+              The rest will make sense from there.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <Link
+                href="https://abrahamoflondon.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-5 py-2.5 text-xs md:text-sm font-semibold text-slate-900 shadow hover:bg-white transition"
+              >
+                Go to Abraham of London
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="https://innovatehub.abrahamoflondon.org/about"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-xs md:text-sm font-semibold text-white shadow hover:bg-blue-500 transition"
+              >
+                Explore InnovateHub
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           </section>
         </div>

@@ -1,6 +1,7 @@
 // pages/innovatehub/about.tsx
 import * as React from "react";
 import Head from "next/head";
+import Link from "next/link";
 import Layout from "@/components/Layout";
 import { getPageTitle } from "@/lib/siteConfig";
 import { Moon, SunMedium, ChevronDown, ChevronUp } from "lucide-react";
@@ -25,7 +26,7 @@ const PRINCIPLES = [
   {
     title: "Legacy Mindset",
     description: "We optimise for work that outlives you, not for a news cycle."
-  },
+  }
 ];
 
 const InnovateHubAboutPage = (): JSX.Element => {
@@ -34,6 +35,7 @@ const InnovateHubAboutPage = (): JSX.Element => {
   const [mounted, setMounted] = React.useState(false);
   const [showOrigin, setShowOrigin] = React.useState(false);
 
+  // Theme management
   React.useEffect(() => {
     setMounted(true);
     try {
@@ -61,6 +63,7 @@ const InnovateHubAboutPage = (): JSX.Element => {
     });
   };
 
+  // Avoid hydration mismatch
   if (!mounted) {
     return (
       <Layout title={pageTitle}>
@@ -69,6 +72,7 @@ const InnovateHubAboutPage = (): JSX.Element => {
     );
   }
 
+  // Theme classes
   const shellClass = isDark
     ? "min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-slate-100"
     : "min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-900";
@@ -77,7 +81,7 @@ const InnovateHubAboutPage = (): JSX.Element => {
     ? "bg-slate-800/80 backdrop-blur-sm border-slate-700 text-slate-200 shadow-xl"
     : "bg-white border-slate-200 text-slate-700 shadow-sm";
 
-  const accentBorderClass = isDark ? "border-blue-500" : "border-blue-500";
+  const accentBorderClass = "border-blue-500";
   const primaryTextClass = isDark ? "text-slate-100" : "text-slate-900";
   const secondaryTextClass = isDark ? "text-slate-300" : "text-slate-700";
   const accentTextClass = isDark ? "text-blue-400" : "text-blue-600";
@@ -172,7 +176,7 @@ const InnovateHubAboutPage = (): JSX.Element => {
           </section>
 
           {/* Main body */}
-          <div className="prose prose-invert prose-lg max-w-none dark:prose-invert">
+          <div className="prose prose-lg max-w-none">
             {/* The Problem */}
             <section className="mb-14" id="problem">
               <h2 className={`text-2xl md:text-3xl font-bold mb-4 ${primaryTextClass}`}>
@@ -254,9 +258,7 @@ const InnovateHubAboutPage = (): JSX.Element => {
                     <li>Can the economics survive contact with reality?</li>
                     <li>Does this still make sense 10–20 years out?</li>
                   </ul>
-                  <p className={`mt-3 text-xs font-semibold ${accentTextClass}`}>
-                    Less theatre. More truth.
-                  </p>
+                  <p className={`mt-3 text-xs font-semibold ${accentTextClass}`}>Less theatre. More truth.</p>
                 </div>
 
                 {/* Disciplined Execution */}
@@ -294,7 +296,11 @@ const InnovateHubAboutPage = (): JSX.Element => {
             </section>
 
             {/* Who we serve */}
-            <section className={`mb-14 rounded-2xl p-8 ${isDark ? "bg-slate-800 text-slate-200" : "bg-slate-900 text-white"}`}>
+            <section
+              className={`mb-14 rounded-2xl p-8 ${
+                isDark ? "bg-slate-800 text-slate-200" : "bg-slate-900 text-white"
+              }`}
+            >
               <h2 className="text-2xl md:text-3xl font-bold mb-4">Who InnovateHub is for</h2>
               <p className="text-lg mb-4">
                 This is not a general-purpose accelerator. It’s a working room for people who:
@@ -336,7 +342,9 @@ const InnovateHubAboutPage = (): JSX.Element => {
                     }`}
                   >
                     <div className="flex items-baseline gap-3">
-                      <span className={`text-xs font-mono ${accentTextClass}`}>{String(idx + 1).padStart(2, "0")}</span>
+                      <span className={`text-xs font-mono ${accentTextClass}`}>
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
                       <h3 className={`text-lg font-bold ${primaryTextClass}`}>{p.title}</h3>
                     </div>
                     <p className={`mt-1 ${secondaryTextClass}`}>{p.description}</p>
@@ -346,7 +354,11 @@ const InnovateHubAboutPage = (): JSX.Element => {
             </section>
 
             {/* Ecosystem context */}
-            <section className={`mb-14 rounded-2xl p-8 ${isDark ? "bg-slate-800/50" : "bg-blue-50"}`}>
+            <section
+              className={`mb-14 rounded-2xl p-8 ${
+                isDark ? "bg-slate-800/50" : "bg-blue-50"
+              }`}
+            >
               <h2 className={`text-2xl md:text-3xl font-bold mb-4 ${primaryTextClass}`}>
                 Where InnovateHub sits in the wider work
               </h2>
@@ -364,11 +376,15 @@ const InnovateHubAboutPage = (): JSX.Element => {
                 </div>
                 <div className={`rounded-xl p-4 border-2 ${accentBorderClass} ${cardClass}`}>
                   <h3 className={`font-semibold mb-1 ${primaryTextClass}`}>InnovateHub</h3>
-                  <p className={secondaryTextClass}>The build room where ideas are tested, refined, and launched.</p>
+                  <p className={secondaryTextClass}>
+                    The build room where ideas are tested, refined, and launched.
+                  </p>
                 </div>
                 <div className={`rounded-xl p-4 border ${cardClass}`}>
                   <h3 className={`font-semibold mb-1 ${primaryTextClass}`}>Endureluxe</h3>
-                  <p className={secondaryTextClass}>A proof point: durable, high-performance products in the wild.</p>
+                  <p className={secondaryTextClass}>
+                    A proof point: durable, high-performance products in the wild.
+                  </p>
                 </div>
               </div>
               <p className={`text-center text-sm font-semibold ${accentTextClass}`}>
@@ -376,26 +392,45 @@ const InnovateHubAboutPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Final CTA */}
+            {/* Final CTA with Blog + Downloads links */}
             <section
               className={`mb-4 text-center rounded-2xl p-10 ${
                 isDark ? "bg-gradient-to-r from-slate-800 to-blue-900" : "bg-gradient-to-r from-slate-900 to-blue-900"
               } text-white`}
             >
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">If you’re carrying a serious idea, you don’t have to build alone.</h2>
-              <p className="text-lg mb-4 text-slate-200">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                If you’re carrying a serious idea, you don’t have to build alone.
+              </h2>
+
+              <p className="text-lg mb-3 text-slate-200">
                 You might be holding a concept, a product in motion, or a venture that needs a reset.
                 Our role is not to rescue you, but to stand alongside you with clear thinking, honest feedback,
                 and systems that respect both your vision and your values.
               </p>
+
               <p className="text-base text-slate-200 mb-6">
-                If that sounds like the kind of room you’ve been looking for, welcome to InnovateHub.
+                Start by immersing yourself in the way we think, then put that thinking to work with practical tools.
               </p>
-              <div className="inline-flex rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-7 py-3 shadow-2xl">
-                <span className="text-sm md:text-base font-semibold tracking-wide uppercase">
-                  Start by mapping your next move
-                </span>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                <Link
+                  href="/blog"
+                  className="inline-flex items-center justify-center rounded-xl bg-white/10 px-6 py-3 text-sm md:text-base font-semibold tracking-wide uppercase shadow-lg hover:bg-white/15 transition"
+                >
+                  Read InnovateHub insights
+                </Link>
+
+                <Link
+                  href="/downloads"
+                  className="inline-flex items-center justify-center rounded-xl bg-slate-900/80 px-6 py-3 text-sm md:text-base font-semibold tracking-wide uppercase shadow-lg border border-slate-600 hover:bg-slate-900 transition"
+                >
+                  Download playbooks &amp; tools
+                </Link>
               </div>
+
+              <p className="mt-5 text-xs text-slate-300">
+                The footer will always show you the full ecosystem. These two are the best entry points if you’re ready to engage.
+              </p>
             </section>
           </div>
         </div>
