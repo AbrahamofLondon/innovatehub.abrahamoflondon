@@ -70,18 +70,18 @@ const ventures: Venture[] = [
     tagline: "Where serious ideas mature into enduring ventures.",
   },
   {
-    name: "Endureluxe",
-    description:
-      "A product venture focused on durable, high-performance goods—where design, endurance, and ethical supply meet.",
-    icon: PackageCheck,
-    href: "https://alomarada.com/endureluxe",
-    isExternal: true,
-    status: "In development",
-    focus: "Premium fitness and everyday performance gear, built to last.",
-    externalLabel: "View Endureluxe overview",
-    tagline: "Sustainable performance, embodied in real products.",
-  },
-];
+  name: "Endureluxe",
+  description:
+    "A community-driven fitness and lifestyle venture uniting everyday athletes, founders, and professionals around disciplined training, sustainable health, and gear that can keep up.",
+  icon: PackageCheck,
+  href: "https://alomarada.com/endureluxe",
+  isExternal: true,
+  status: "Active",
+  focus:
+    "Community-led training, challenges, and durable performance gear for people who train, build, and endure together.",
+  externalLabel: "Explore Endureluxe",
+  tagline: "Community-driven fitness transformation.",
+},
 
 const statusOrder: VentureStatus[] = ["Active", "In development"];
 

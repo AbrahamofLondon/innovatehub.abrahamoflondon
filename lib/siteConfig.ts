@@ -221,17 +221,18 @@ export const siteConfig = {
       featured: true,
     },
     {
-      initials: "EL",
-      title: "Endureluxe",
-      description:
-        "Premium, sustainable fitness partnerships that promote wellbeing—powered by community and thoughtful technology, and complemented by writing that advances state-of-the-art knowledge and practical life wisdom.",
-      href: "https://alomarada.com/endureluxe",
-      cta: "Explore Endureluxe",
-      themeColor: "#5C6A72",
-      status: "development",
-      category: "product",
-      featured: false,
-    },
+  name: "Endureluxe",
+  description:
+    "A community-driven fitness and lifestyle venture uniting everyday athletes, founders, and professionals around disciplined training, sustainable health, and gear that can keep up.",
+  icon: PackageCheck,
+  href: "https://alomarada.com/endureluxe",
+  isExternal: true,
+  status: "Active",
+  focus:
+    "Community-led training, challenges, and durable performance gear for people who train, build, and endure together.",
+  externalLabel: "Explore Endureluxe",
+  tagline: "Community-driven fitness transformation.",
+},
   ] as const,
 
   keywords: [
