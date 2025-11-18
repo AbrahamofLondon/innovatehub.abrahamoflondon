@@ -12,6 +12,8 @@ import {
   TrendingUp,
   Users,
   Globe2,
+  BookOpen,
+  Download,
 } from "lucide-react";
 
 import Layout from "@/components/Layout";
@@ -20,7 +22,6 @@ type VentureStatus = "Active" | "In development";
 
 interface Venture {
   name: string;
-  slug?: string;
   description: string;
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   href: string;
@@ -28,6 +29,7 @@ interface Venture {
   focus: string;
   externalLabel?: string;
   tagline?: string;
+  isExternal?: boolean;
 }
 
 const ventures: Venture[] = [
@@ -36,11 +38,12 @@ const ventures: Venture[] = [
     description:
       "The narrative headquarters: story, philosophy, and the lens through which all ventures are built.",
     icon: Users,
-    href: "https://abrahamoflondon.org",
+    href: "/", // internal: main site home
+    isExternal: false,
     status: "Active",
     focus: "Thought leadership, fatherhood, strategy, and legacy content.",
-    externalLabel: "Visit main site",
-    tagline: "Where the worldview and voice are forged."
+    externalLabel: "Go to main platform",
+    tagline: "Where the worldview and voice are forged.",
   },
   {
     name: "Alomarada",
@@ -48,21 +51,23 @@ const ventures: Venture[] = [
       "Strategy and market-entry advisory for institutions operating in complex and emerging markets.",
     icon: Building2,
     href: "https://alomarada.com",
+    isExternal: true,
     status: "In development",
     focus: "Institutional advisory, market-entry strategy, and deal architecture.",
-    externalLabel: "View Alomarada",
-    tagline: "Turning context and constraints into strategic leverage."
+    externalLabel: "Open Alomarada site",
+    tagline: "Turning context and constraints into strategic leverage.",
   },
   {
     name: "InnovateHub",
     description:
       "A build-space for serious founders and leaders who want clear thinking, disciplined execution, and integrity at the core of what they build.",
     icon: Lightbulb,
-    href: "https://innovatehub.abrahamoflondon.org/about",
+    href: "/innovatehub/about", // internal route for InnovateHub microsite
+    isExternal: false,
     status: "Active",
     focus: "Venture design, strategic clarity, and execution systems.",
     externalLabel: "Explore InnovateHub",
-    tagline: "Where serious ideas mature into enduring ventures."
+    tagline: "Where serious ideas mature into enduring ventures.",
   },
   {
     name: "Endureluxe",
@@ -70,10 +75,11 @@ const ventures: Venture[] = [
       "A product venture focused on durable, high-performance goods—where design, endurance, and ethical supply meet.",
     icon: PackageCheck,
     href: "https://alomarada.com/endureluxe",
+    isExternal: true,
     status: "In development",
     focus: "Premium fitness and everyday performance gear, built to last.",
-    externalLabel: "Endureluxe overview",
-    tagline: "Sustainable performance, embodied in real products."
+    externalLabel: "View Endureluxe overview",
+    tagline: "Sustainable performance, embodied in real products.",
   },
 ];
 
@@ -148,9 +154,8 @@ const VenturesPage: NextPage = () => {
                   </h2>
                   <p className="text-slate-300">
                     Start with{" "}
-                    <span className="font-semibold text-slate-100">Abraham of London</span>{" "}
-                    for the worldview, then move into{" "}
-                    <span className="font-semibold text-slate-100">InnovateHub</span> if you&apos;re building.
+                    <span className="font-semibold text-slate-100">Abraham of London</span> for the worldview,
+                    then step into <span className="font-semibold text-slate-100">InnovateHub</span> if you&apos;re actively building.
                   </p>
                 </div>
               </div>
@@ -180,103 +185,110 @@ const VenturesPage: NextPage = () => {
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
-                  {group.map((venture) => (
-                    <article
-                      key={venture.name}
-                      className="group rounded-2xl border border-slate-800 bg-slate-900/70 p-6 md:p-7 shadow-sm hover:shadow-xl hover:border-blue-500/70 transition-all"
-                    >
-                      <div className="flex items-start gap-4 mb-4">
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-slate-800 border border-slate-700">
-                          <venture.icon className="h-5 w-5 text-blue-300" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex flex-wrap items-center gap-2 mb-1">
-                            <h3 className="text-lg md:text-xl font-semibold text-slate-50">
-                              {venture.name}
-                            </h3>
-                            <span
-                              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase ${
-                                venture.status === "Active"
-                                  ? "bg-emerald-500/10 text-emerald-200 border border-emerald-500/40"
-                                  : "bg-amber-500/10 text-amber-200 border border-amber-500/40"
-                              }`}
-                            >
-                              {venture.status}
-                            </span>
+                  {group.map((venture) => {
+                    const isExternal = venture.isExternal ?? venture.href.startsWith("http");
+
+                    return (
+                      <article
+                        key={venture.name}
+                        className="group rounded-2xl border border-slate-800 bg-slate-900/70 p-6 md:p-7 shadow-sm hover:shadow-xl hover:border-blue-500/70 transition-all"
+                      >
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-slate-800 border border-slate-700">
+                            <venture.icon className="h-5 w-5 text-blue-300" />
                           </div>
-                          {venture.tagline && (
-                            <p className="text-xs uppercase tracking-[0.18em] text-blue-300">
-                              {venture.tagline}
+                          <div className="flex-1">
+                            <div className="flex flex-wrap items-center gap-2 mb-1">
+                              <h3 className="text-lg md:text-xl font-semibold text-slate-50">
+                                {venture.name}
+                              </h3>
+                              <span
+                                className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase ${
+                                  venture.status === "Active"
+                                    ? "bg-emerald-500/10 text-emerald-200 border border-emerald-500/40"
+                                    : "bg-amber-500/10 text-amber-200 border border-amber-500/40"
+                                }`}
+                              >
+                                {venture.status}
+                              </span>
+                            </div>
+                            {venture.tagline && (
+                              <p className="text-xs uppercase tracking-[0.18em] text-blue-300">
+                                {venture.tagline}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+
+                        <p className="text-sm md:text-base text-slate-300 mb-3">
+                          {venture.description}
+                        </p>
+                        <p className="text-xs md:text-sm text-slate-400 mb-4">
+                          <span className="font-semibold text-slate-200">Focus:&nbsp;</span>
+                          {venture.focus}
+                        </p>
+
+                        <div className="flex items-center justify-between gap-3">
+                          <Link
+                            href={venture.href}
+                            target={isExternal ? "_blank" : undefined}
+                            rel={isExternal ? "noopener noreferrer" : undefined}
+                            className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs md:text-sm font-semibold text-white shadow-lg hover:bg-blue-500 transition group"
+                          >
+                            {venture.externalLabel ?? "Open venture"}
+                            <ArrowRight className="h-4 w-4" />
+                          </Link>
+                          <div className="text-[11px] text-slate-500 text-right">
+                            <p>
+                              Built under the{" "}
+                              <span className="font-semibold text-slate-300">Abraham of London</span> mandate.
                             </p>
-                          )}
+                            <p>One vision, expressed through multiple engines.</p>
+                          </div>
                         </div>
-                      </div>
-
-                      <p className="text-sm md:text-base text-slate-300 mb-3">
-                        {venture.description}
-                      </p>
-                      <p className="text-xs md:text-sm text-slate-400 mb-4">
-                        <span className="font-semibold text-slate-200">Focus:&nbsp;</span>
-                        {venture.focus}
-                      </p>
-
-                      <div className="flex items-center justify-between gap-3">
-                        <Link
-                          href={venture.href}
-                          target={venture.href.startsWith("http") ? "_blank" : undefined}
-                          rel={venture.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                          className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs md:text-sm font-semibold text-white shadow-lg hover:bg-blue-500 transition group"
-                        >
-                          {venture.externalLabel ?? "Open venture"}
-                          <ArrowRight className="h-4 w-4" />
-                        </Link>
-                        <div className="text-[11px] text-slate-500 text-right">
-                          <p>
-                            Built under the{" "}
-                            <span className="font-semibold text-slate-300">Abraham of London</span> mandate.
-                          </p>
-                          <p>One vision, expressed through multiple engines.</p>
-                        </div>
-                      </div>
-                    </article>
-                  ))}
+                      </article>
+                    );
+                  })}
                 </div>
               </section>
             );
           })}
 
-          {/* Final cross-venture CTA */}
-          <section className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/70 p-7 text-center">
+          {/* Cross-venture CTAs: Blog + Downloads (internal, not dead) */}
+          <section className="mt-10 mb-4 rounded-2xl border border-slate-800 bg-slate-950/80 p-7 md:p-8 text-center">
             <h2 className="text-lg md:text-xl font-semibold text-slate-50 mb-3">
-              Not sure where to plug in?
+              Want to explore the thinking and tools behind these ventures?
             </h2>
-            <p className="text-sm md:text-base text-slate-300 mb-4 max-w-2xl mx-auto">
-              Start with the{" "}
-              <span className="font-semibold text-slate-100">Abraham of London</span> platform to get the
-              full context, then move into{" "}
-              <span className="font-semibold text-slate-100">InnovateHub</span> if you&apos;re actively building.
-              The rest will make sense from there.
+            <p className="text-sm md:text-base text-slate-300 mb-5 max-w-2xl mx-auto">
+              Two of the most practical ways to engage the ecosystem right now are through the{" "}
+              <span className="font-semibold text-slate-100">Blog</span> and the{" "}
+              <span className="font-semibold text-slate-100">Downloads</span> library.
+              Both are live, maintained, and built to be used—not admired.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <Link
-                href="https://abrahamoflondon.org"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/blog"
                 className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-5 py-2.5 text-xs md:text-sm font-semibold text-slate-900 shadow hover:bg-white transition"
               >
-                Go to Abraham of London
+                <BookOpen className="h-4 w-4" />
+                Visit the Blog
                 <ArrowRight className="h-4 w-4" />
               </Link>
+
               <Link
-                href="https://innovatehub.abrahamoflondon.org/about"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/downloads"
                 className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-xs md:text-sm font-semibold text-white shadow hover:bg-blue-500 transition"
               >
-                Explore InnovateHub
+                <Download className="h-4 w-4" />
+                Open Downloads &amp; Playbooks
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
+
+            <p className="mt-4 text-[11px] text-slate-500">
+              These routes are internal to this site. If they don&apos;t resolve, the problem is routing, not the links.
+            </p>
           </section>
         </div>
       </div>
