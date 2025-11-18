@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 
 import Layout from "@/components/Layout";
+import { routes } from "@/lib/siteConfig";
 
 type VentureStatus = "Active" | "In development";
 
@@ -39,7 +40,7 @@ const ventures: Venture[] = [
     description:
       "The narrative headquarters: story, philosophy, and the lens through which all ventures are built.",
     icon: Users,
-    href: "/",
+    href: routes.home,
     isExternal: false,
     status: "Active",
     focus: "Thought leadership, fatherhood, strategy, and legacy content.",
@@ -54,7 +55,8 @@ const ventures: Venture[] = [
     href: "https://alomarada.com",
     isExternal: true,
     status: "Active",
-    focus: "Institutional advisory, market-entry strategy, and deal architecture.",
+    focus:
+      "Institutional advisory, market-entry strategy, and deal architecture.",
     externalLabel: "Open Alomarada site",
     tagline: "Turning context and constraints into strategic leverage.",
   },
@@ -188,7 +190,8 @@ const VenturesPage: NextPage = () => {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   {group.map((venture) => {
-                    const isExternal = venture.isExternal ?? venture.href.startsWith("http");
+                    const isExternal =
+                      venture.isExternal ?? venture.href.startsWith("http");
 
                     return (
                       <article
@@ -226,7 +229,9 @@ const VenturesPage: NextPage = () => {
                           {venture.description}
                         </p>
                         <p className="text-xs md:text-sm text-slate-400 mb-4">
-                          <span className="font-semibold text-slate-200">Focus:&nbsp;</span>
+                          <span className="font-semibold text-slate-200">
+                            Focus:&nbsp;
+                          </span>
                           {venture.focus}
                         </p>
 
@@ -243,7 +248,10 @@ const VenturesPage: NextPage = () => {
                           <div className="text-[11px] text-slate-500 text-right">
                             <p>
                               Built under the{" "}
-                              <span className="font-semibold text-slate-300">Abraham of London</span> mandate.
+                              <span className="font-semibold text-slate-300">
+                                Abraham of London
+                              </span>{" "}
+                              mandate.
                             </p>
                             <p>One vision, expressed through multiple engines.</p>
                           </div>
@@ -270,7 +278,7 @@ const VenturesPage: NextPage = () => {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <Link
-                href="/blog"
+                href={routes.blog}
                 className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-5 py-2.5 text-xs md:text-sm font-semibold text-slate-900 shadow hover:bg-white transition"
               >
                 <BookOpen className="h-4 w-4" />
@@ -279,7 +287,7 @@ const VenturesPage: NextPage = () => {
               </Link>
 
               <Link
-                href="/downloads"
+                href={routes.downloads}
                 className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-xs md:text-sm font-semibold text-white shadow hover:bg-blue-500 transition"
               >
                 <Download className="h-4 w-4" />

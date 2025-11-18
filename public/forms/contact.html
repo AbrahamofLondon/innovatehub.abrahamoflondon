@@ -4,68 +4,352 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Contact — InnovateHub by Abraham of London</title>
+    <meta
+      name="description"
+      content="Contact InnovateHub for strategy, build support, and venture-aligned collaboration within the Abraham of London ecosystem."
+    />
     <style>
-      :root { --forest: #0b2e1f; --cream: #f7f5ee; --ink: #1f2937; --line: rgba(0, 0, 0, 0.08); }
+      :root {
+        --forest: #0b2e1f;
+        --cream: #f7f5ee;
+        --ink: #111827;
+        --muted: #6b7280;
+        --line: rgba(0, 0, 0, 0.08);
+        --accent: #2563eb;
+        --soft-gold: #b89b5b;
+      }
+      * {
+        box-sizing: border-box;
+      }
       body {
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial;
-        margin: 0; padding: 18px; color: var(--ink); background: var(--cream);
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Ubuntu, Arial, sans-serif;
+        color: var(--ink);
+        background: radial-gradient(circle at top, #e5f0ff 0, #f7f5ee 45%, #f3f4f6 100%);
       }
-      .wrap { max-width: 720px; margin: 0 auto; }
+      .shell {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 920px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        gap: 24px;
+        background: rgba(255, 255, 255, 0.96);
+        border-radius: 24px;
+        box-shadow: 0 18px 50px rgba(15, 23, 42, 0.22);
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        padding: 24px;
+      }
+      @media (max-width: 768px) {
+        .wrap {
+          grid-template-columns: 1fr;
+          padding: 20px;
+        }
+      }
+
+      /* Left column: copy */
+      .badge {
+        font-size: 0.8rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 10px;
+      }
+      .badge a {
+        color: var(--forest);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .badge a:hover {
+        text-decoration: underline;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        color: var(--soft-gold);
+        margin-bottom: 6px;
+      }
+      .eyebrow-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: var(--soft-gold);
+      }
       h1 {
-        font-family: Georgia, "Times New Roman", serif; color: var(--forest); margin: 0 0 8px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.9rem;
+        line-height: 1.2;
+        color: var(--forest);
+        margin: 0 0 10px;
       }
-      p { margin: 0 0 10px; opacity: 0.9; }
+      p.lead {
+        margin: 0 0 14px;
+        color: #374151;
+        font-size: 0.98rem;
+        line-height: 1.5;
+      }
+      .pill-list {
+        margin: 0 0 18px;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .pill-list li {
+        font-size: 0.75rem;
+        border-radius: 999px;
+        padding: 5px 10px;
+        background: #f3f4ff;
+        border: 1px solid rgba(37, 99, 235, 0.2);
+        color: #1d4ed8;
+        font-weight: 500;
+      }
+      .note {
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      .note strong {
+        color: var(--forest);
+      }
+
+      /* Right column: form */
       form {
-        margin-top: 12px; border: 1px solid var(--line); padding: 16px;
-        border-radius: 14px; background: #fff;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: #ffffff;
+        padding: 18px 18px 16px;
       }
-      label { display: block; margin: 10px 0 6px; font-weight: 600; }
-      input, textarea {
-        width: 100%; padding: 10px; border: 1px solid var(--line);
-        border-radius: 10px; font: inherit;
+      .form-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin: 0 0 6px;
+        color: #111827;
       }
-      .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .form-subtitle {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin: 0 0 12px;
+      }
+      label {
+        display: block;
+        margin: 10px 0 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #111827;
+      }
+      .hint {
+        display: block;
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin-top: 2px;
+      }
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 9px 10px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        font: inherit;
+        color: var(--ink);
+        background: #ffffff;
+      }
+      input:focus,
+      textarea:focus,
+      select:focus {
+        outline: 2px solid rgba(37, 99, 235, 0.3);
+        border-color: rgba(37, 99, 235, 0.4);
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      @media (max-width: 640px) {
+        .row {
+          grid-template-columns: 1fr;
+        }
+      }
       button {
-        margin-top: 14px; background: var(--forest); color: #fff; border: 0;
-        border-radius: 999px; padding: 11px 16px; font-weight: 700; cursor: pointer;
+        margin-top: 14px;
+        background: var(--forest);
+        color: #fff;
+        border: 0;
+        border-radius: 999px;
+        padding: 11px 18px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
       }
-      .hidden { display: none !important; }
-      .badge { font-size: 0.9rem; opacity: 0.8; margin-bottom: 1rem; }
-      .badge a { color: var(--forest); text-decoration: underline; }
+      button:hover {
+        background: #08311f;
+      }
+      button span.arrow {
+        font-size: 1rem;
+        transform: translateY(1px);
+      }
+      .hidden {
+        display: none !important;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+      .footnote {
+        margin-top: 10px;
+        font-size: 0.75rem;
+        color: #9ca3af;
+      }
     </style>
   </head>
   <body>
-    <div class="wrap">
-      <p class="badge">A venture from <a href="https://abrahamoflondon.org">Abraham of London</a></p>
-      <h1>Contact InnovateHub</h1>
-      <p>We’ll reply within 2–3 working days. For Alomarad or Enduleluxe inquiries, specify in your message.</p>
+    <div class="shell">
+      <div class="wrap">
+        <!-- LEFT: COPY -->
+        <section>
+          <p class="badge">
+            A venture within
+            <a href="https://www.abrahamoflondon.org">Abraham of London</a>
+          </p>
 
-      <!-- Netlify captures this form -->
-      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="contact" />
-        <p class="hidden">
-          <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
-        </p>
-
-        <div class="row">
-          <div>
-            <label for="name">Name</label>
-            <input id="name" name="name" required />
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span>Strategic contact</span>
           </div>
-          <div>
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" required />
-          </div>
-        </div>
 
-        <label for="subject">Subject</label>
-        <input id="subject" name="subject" placeholder="How can we help? (e.g., InnovateHub, Alomarad, Enduleluxe)" />
+          <h1>Contact InnovateHub</h1>
+          <p class="lead">
+            Use this form to reach InnovateHub for strategy, build support, or ecosystem collaboration.
+            If your enquiry touches <strong>Alomarada</strong> or <strong>Endureluxe</strong>, you can specify that
+            directly in the form.
+          </p>
 
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="6" required></textarea>
+          <ul class="pill-list">
+            <li>Venture design &amp; validation</li>
+            <li>Execution &amp; operating rhythms</li>
+            <li>Alomarada &amp; Endureluxe collaboration</li>
+            <li>Speaking &amp; content</li>
+          </ul>
 
-        <button type="submit">Send Message</button>
-      </form>
+          <p class="note">
+            We typically respond within <strong>2–3 working days</strong>. For time-sensitive matters,
+            mention your timelines clearly so we can triage appropriately.
+          </p>
+        </section>
+
+        <!-- RIGHT: FORM (NETLIFY) -->
+        <section aria-label="Contact form for InnovateHub">
+          <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+          >
+            <!-- required for Netlify -->
+            <input type="hidden" name="form-name" value="contact" />
+
+            <!-- honeypot -->
+            <p class="hidden">
+              <label>
+                Don’t fill this out if you're human:
+                <input name="bot-field" />
+              </label>
+            </p>
+
+            <p class="form-title">Send a message</p>
+            <p class="form-subtitle">
+              Share enough context so we understand where you are now and what you’re trying to build.
+            </p>
+
+            <div class="row">
+              <div>
+                <label for="name">Name</label>
+                <input id="name" name="name" autocomplete="name" required />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                />
+              </div>
+            </div>
+
+            <label for="venture">
+              Which part of the ecosystem does this relate to?
+            </label>
+            <select id="venture" name="venture">
+              <option value="">Select an option (optional)</option>
+              <option value="InnovateHub">InnovateHub</option>
+              <option value="Alomarada">Alomarada</option>
+              <option value="Endureluxe">Endureluxe</option>
+              <option value="Multiple / Not sure">Multiple / Not sure</option>
+            </select>
+            <span class="hint">
+              This simply helps us route your message more intelligently.
+            </span>
+
+            <label for="subject">Subject</label>
+            <input
+              id="subject"
+              name="subject"
+              placeholder="Short headline for your enquiry"
+            />
+
+            <label for="message">
+              Message
+              <span class="sr-only">
+                (You may specify InnovateHub, Alomarada, or Endureluxe)
+              </span>
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows="6"
+              required
+            ></textarea>
+            <span class="hint">
+              Helpful to include: where you are now, what problem you’re solving, and your next 90-day goals.
+            </span>
+
+            <button type="submit">
+              <span>Send message</span>
+              <span class="arrow">↗</span>
+            </button>
+
+            <p class="footnote">
+              By submitting, you consent to us storing your details for the purpose of responding to this enquiry.
+            </p>
+          </form>
+        </section>
+      </div>
     </div>
   </body>
 </html>

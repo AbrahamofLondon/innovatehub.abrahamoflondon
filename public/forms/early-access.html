@@ -4,77 +4,382 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>InnovateHub Early Access — Abraham of London</title>
-    <meta name="description" content="Request early access to InnovateHub—strategy, playbooks, and hands-on support within the Abraham of London family (Alomarada & Endureluxe)." />
+    <meta
+      name="description"
+      content="Request early access to InnovateHub—strategy, playbooks, and hands-on support for founders, operators, and ecosystem leaders within the Abraham of London family."
+    />
     <style>
-      :root { --forest:#0b2e1f; --cream:#f7f5ee; --ink:#1f2937; --line:rgba(0,0,0,.08); }
-      * { box-sizing: border-box; }
+      :root {
+        --forest: #0b2e1f;
+        --cream: #f7f5ee;
+        --ink: #111827;
+        --muted: #6b7280;
+        --line: rgba(0, 0, 0, 0.08);
+        --accent: #2563eb;
+        --soft-gold: #b89b5b;
+        --chip-bg: #eef2ff;
+      }
+      * {
+        box-sizing: border-box;
+      }
       body {
-        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Arial;
-        margin: 0; padding: 20px; color: var(--ink); background: var(--cream);
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Ubuntu, Arial, sans-serif;
+        color: var(--ink);
+        background: radial-gradient(circle at top, #e0f2fe 0, #f7f5ee 45%, #e5e7eb 100%);
       }
-      .wrap { max-width: 760px; margin: 0 auto; }
-      h1 { font-family: Georgia,"Times New Roman",serif; color: var(--forest); margin: 0 0 .5rem; }
-      p.lead { opacity: .9; margin: 0 0 1rem; }
+      .shell {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 980px;
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        gap: 28px;
+        padding: 26px;
+        border-radius: 26px;
+        background: rgba(255, 255, 255, 0.97);
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        box-shadow: 0 20px 55px rgba(15, 23, 42, 0.24);
+      }
+      @media (max-width: 840px) {
+        .wrap {
+          grid-template-columns: 1fr;
+          padding: 22px;
+        }
+      }
+
+      /* LEFT: Narrative & framing */
+      .badge {
+        font-size: 0.8rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 10px;
+      }
+      .badge a {
+        color: var(--forest);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .badge a:hover {
+        text-decoration: underline;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        color: var(--soft-gold);
+        margin-bottom: 6px;
+      }
+      .eyebrow-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: var(--soft-gold);
+      }
+      h1 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 2rem;
+        line-height: 1.2;
+        color: var(--forest);
+        margin: 0 0 10px;
+      }
+      p.lead {
+        margin: 0 0 14px;
+        color: #374151;
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+      .context-box {
+        margin-top: 12px;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: #f9fafb;
+        padding: 14px 14px 12px;
+      }
+      .context-title {
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: #6b7280;
+        margin: 0 0 8px;
+      }
+      .context-body {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #374151;
+        line-height: 1.5;
+      }
+      .chips {
+        margin: 12px 0 2px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .chip {
+        border-radius: 999px;
+        padding: 4px 9px;
+        border: 1px solid rgba(37, 99, 235, 0.18);
+        background: var(--chip-bg);
+        font-size: 0.75rem;
+        color: #1d4ed8;
+        font-weight: 500;
+      }
+      .micro {
+        margin-top: 10px;
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .micro strong {
+        color: var(--forest);
+      }
+
+      /* RIGHT: Form */
       form {
-        margin-top: 12px; border: 1px solid var(--line); padding: 16px; border-radius: 14px; background:#fff;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: #ffffff;
+        padding: 18px 18px 14px;
       }
-      label { display:block; margin: 10px 0 6px; font-weight: 600; }
-      input, textarea {
-        width:100%; padding:10px; border:1px solid var(--line); border-radius:10px; background:#fff;
+      .form-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin: 0 0 4px;
+        color: #111827;
+      }
+      .form-subtitle {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin: 0 0 12px;
+      }
+      label {
+        display: block;
+        margin: 10px 0 6px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: #111827;
+      }
+      .hint {
+        display: block;
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin-top: 2px;
+      }
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 9px 10px;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        font: inherit;
+        background: #ffffff;
+        color: var(--ink);
+      }
+      input:focus,
+      textarea:focus,
+      select:focus {
+        outline: 2px solid rgba(37, 99, 235, 0.3);
+        border-color: rgba(37, 99, 235, 0.4);
       }
       button {
-        margin-top: 12px; background: var(--forest); color: #fff; border: 0; border-radius: 999px;
-        padding: 11px 16px; font-weight: 700; cursor: pointer;
+        margin-top: 12px;
+        background: var(--forest);
+        color: #fff;
+        border: 0;
+        border-radius: 999px;
+        padding: 11px 18px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
       }
-      .badge { font-size:.9rem; opacity:.8; margin-bottom:1rem; }
-      .badge a { color: var(--forest); text-decoration: underline; }
-      .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+      button:hover {
+        background: #08311f;
+      }
+      button span.arrow {
+        font-size: 1rem;
+        transform: translateY(1px);
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+      .footnote {
+        margin-top: 10px;
+        font-size: 0.75rem;
+        color: #9ca3af;
+      }
     </style>
   </head>
   <body>
-    <div class="wrap">
-      <p class="badge">A venture from <a href="https://abrahamoflondon.org">Abraham of London</a></p>
+    <div class="shell">
+      <div class="wrap">
+        <!-- LEFT: CONTEXT -->
+        <section>
+          <p class="badge">
+            A venture within
+            <a href="https://www.abrahamoflondon.org">Abraham of London</a>
+          </p>
 
-      <h1>InnovateHub Early Access</h1>
-      <p class="lead">Tell us about you and your project to join our pilot group. You can also note if you’d like touchpoints with <strong>Alomarada</strong> (investor advisory & diaspora mentoring) or <strong>Endureluxe</strong> (premium, sustainable fitness collaborations).</p>
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span>Early access</span>
+          </div>
 
-      <!-- Netlify captures this form (no JS required) -->
-      <form
-        name="early-access"
-        method="POST"
-        data-netlify="true"
-        data-netlify-honeypot="bot-field"
-        action="/forms/thanks.html"
-      >
-        <!-- required for Netlify -->
-        <input type="hidden" name="form-name" value="early-access" />
+          <h1>InnovateHub Early Access</h1>
+          <p class="lead">
+            This pilot group is for founders, operators, and ecosystem leaders who want
+            disciplined thinking, build support, and honest feedback—without the hype.
+          </p>
 
-        <!-- honeypot -->
-        <p class="sr-only">
-          <label>Don’t fill this out if you’re human:
-            <input name="bot-field" />
-          </label>
-        </p>
+          <div class="context-box">
+            <p class="context-title">What you can expect</p>
+            <p class="context-body">
+              We’re testing the core of InnovateHub: strategic conversations, lightweight playbooks,
+              and operating rhythms that help you make better decisions, faster. You can also note
+              where you’d like touchpoints with
+              <strong>Alomarada</strong> (investor advisory &amp; diaspora mentoring)
+              or <strong>Endureluxe</strong> (community-driven fitness &amp; performance).
+            </p>
+            <div class="chips">
+              <span class="chip">90-day focus</span>
+              <span class="chip">Execution support</span>
+              <span class="chip">Honest feedback</span>
+              <span class="chip">No fluff</span>
+            </div>
+          </div>
 
-        <label for="name">Name</label>
-        <input id="name" name="name" autocomplete="name" required />
+          <p class="micro">
+            We review requests in batches. Sharing clear context and concrete goals gives you
+            the best chance of being included in the next cohort.
+          </p>
+        </section>
 
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" autocomplete="email" required />
+        <!-- RIGHT: FORM (NETLIFY) -->
+        <section aria-label="Early access request form for InnovateHub">
+          <form
+            name="early-access"
+            method="POST"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+          >
+            <!-- required for Netlify -->
+            <input type="hidden" name="form-name" value="early-access" />
 
-        <label for="company">Company / Project</label>
-        <input id="company" name="company" autocomplete="organization" />
+            <!-- honeypot -->
+            <p class="sr-only">
+              <label>
+                Don’t fill this out if you’re human:
+                <input name="bot-field" />
+              </label>
+            </p>
 
-        <label for="goals">What do you want to achieve in the next 90 days?
-          <span class="sr-only">(You may specify Alomarada or Endureluxe)</span>
-        </label>
-        <textarea id="goals" name="goals" rows="5" required></textarea>
+            <p class="form-title">Request early access</p>
+            <p class="form-subtitle">
+              A clear, honest snapshot of your current reality is more valuable than a polished pitch.
+            </p>
 
-        <!-- Optional: reCAPTCHA if enabled in Netlify settings -->
-        <!-- <div data-netlify-recaptcha="true"></div> -->
+            <label for="name">Name</label>
+            <input id="name" name="name" autocomplete="name" required />
 
-        <button type="submit">Request Access</button>
-      </form>
+            <label for="email">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            />
+
+            <label for="company">Company / Project</label>
+            <input
+              id="company"
+              name="company"
+              autocomplete="organization"
+              placeholder="If you’re pre-idea or between projects, you can leave this blank."
+            />
+
+            <label for="ecosystem">
+              Which workstream are you most interested in?
+            </label>
+            <select id="ecosystem" name="ecosystem">
+              <option value="">Select an option (optional)</option>
+              <option value="InnovateHub core">
+                InnovateHub core (strategy &amp; build support)
+              </option>
+              <option value="Alomarada">
+                Alomarada (investor advisory &amp; diaspora mentoring)
+              </option>
+              <option value="Endureluxe">
+                Endureluxe (fitness, community &amp; performance gear)
+              </option>
+              <option value="Blend of all three">
+                Blend of all three
+              </option>
+            </select>
+
+            <label for="goals">
+              What do you want to achieve in the next 90 days?
+              <span class="sr-only">
+                (You may specify Alomarada or Endureluxe if relevant)
+              </span>
+            </label>
+            <textarea
+              id="goals"
+              name="goals"
+              rows="5"
+              required
+            ></textarea>
+            <span class="hint">
+              Helpful prompts: What problem are you facing now? What would “meaningful progress” look like in 90 days?
+            </span>
+
+            <label for="fit">
+              Why do you think this is the right time to work with InnovateHub?
+            </label>
+            <textarea
+              id="fit"
+              name="fit"
+              rows="3"
+            ></textarea>
+            <span class="hint">
+              Optional, but it gives us a sense of your readiness and constraints.
+            </span>
+
+            <!-- Optional: reCAPTCHA if enabled in Netlify settings -->
+            <!-- <div data-netlify-recaptcha="true"></div> -->
+
+            <button type="submit">
+              <span>Request access</span>
+              <span class="arrow">↗</span>
+            </button>
+
+            <p class="footnote">
+              We will only use your information to assess fit for the current and future InnovateHub cohorts.
+            </p>
+          </form>
+        </section>
+      </div>
     </div>
   </body>
 </html>
