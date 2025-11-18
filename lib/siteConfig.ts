@@ -27,7 +27,7 @@ export type Venture = {
 
 /**
  * Enumerate all canonical routes supported by this app.
- * (InnovateHub is treated as an external microsite, so it's NOT in here.)
+ * (InnovateHub is treated as an external microsite, so it's NOT included here.)
  */
 export type RouteId =
   | "home"
@@ -166,7 +166,7 @@ export const siteConfig = {
     },
     // Primary brand link
     {
-      href: "https://www.abrahamoflondon.org",
+      href: getSiteUrl().replace(/\/+$/, ""),
       label: "Abraham of London",
       icon: "",
       external: false,
@@ -221,18 +221,17 @@ export const siteConfig = {
       featured: true,
     },
     {
-  name: "Endureluxe",
-  description:
-    "A community-driven fitness and lifestyle venture uniting everyday athletes, founders, and professionals around disciplined training, sustainable health, and gear that can keep up.",
-  icon: PackageCheck,
-  href: "https://alomarada.com/endureluxe",
-  isExternal: true,
-  status: "Active",
-  focus:
-    "Community-led training, challenges, and durable performance gear for people who train, build, and endure together.",
-  externalLabel: "Explore Endureluxe",
-  tagline: "Community-driven fitness transformation.",
-},
+      initials: "EL",
+      title: "Endureluxe",
+      description:
+        "A community-driven fitness and lifestyle venture uniting everyday athletes, founders, and professionals around disciplined training, sustainable health, and gear that can keep up.",
+      href: "https://alomarada.com/endureluxe",
+      cta: "Explore Endureluxe",
+      themeColor: "#5C6A72",
+      status: "development",
+      category: "product",
+      featured: false,
+    },
   ] as const,
 
   keywords: [

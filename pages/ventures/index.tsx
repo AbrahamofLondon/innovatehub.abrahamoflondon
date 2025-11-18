@@ -1,4 +1,5 @@
 // pages/ventures/index.tsx
+
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -38,7 +39,7 @@ const ventures: Venture[] = [
     description:
       "The narrative headquarters: story, philosophy, and the lens through which all ventures are built.",
     icon: Users,
-    href: "/", // internal: main site home
+    href: "/",
     isExternal: false,
     status: "Active",
     focus: "Thought leadership, fatherhood, strategy, and legacy content.",
@@ -52,7 +53,7 @@ const ventures: Venture[] = [
     icon: Building2,
     href: "https://alomarada.com",
     isExternal: true,
-    status: "In development",
+    status: "Active",
     focus: "Institutional advisory, market-entry strategy, and deal architecture.",
     externalLabel: "Open Alomarada site",
     tagline: "Turning context and constraints into strategic leverage.",
@@ -62,26 +63,27 @@ const ventures: Venture[] = [
     description:
       "A build-space for serious founders and leaders who want clear thinking, disciplined execution, and integrity at the core of what they build.",
     icon: Lightbulb,
-    href: "/innovatehub/about", // internal route for InnovateHub microsite
-    isExternal: false,
+    href: "https://innovatehub.abrahamoflondon.org/about",
+    isExternal: true,
     status: "Active",
     focus: "Venture design, strategic clarity, and execution systems.",
     externalLabel: "Explore InnovateHub",
     tagline: "Where serious ideas mature into enduring ventures.",
   },
   {
-  name: "Endureluxe",
-  description:
-    "A community-driven fitness and lifestyle venture uniting everyday athletes, founders, and professionals around disciplined training, sustainable health, and gear that can keep up.",
-  icon: PackageCheck,
-  href: "https://alomarada.com/endureluxe",
-  isExternal: true,
-  status: "Active",
-  focus:
-    "Community-led training, challenges, and durable performance gear for people who train, build, and endure together.",
-  externalLabel: "Explore Endureluxe",
-  tagline: "Community-driven fitness transformation.",
-},
+    name: "Endureluxe",
+    description:
+      "A community-driven fitness and lifestyle venture uniting everyday athletes, founders, and professionals around disciplined training, sustainable health, and gear that can keep up.",
+    icon: PackageCheck,
+    href: "https://alomarada.com/endureluxe",
+    isExternal: true,
+    status: "In development",
+    focus:
+      "Community-led training, challenges, and durable performance gear for people who train, build, and endure together.",
+    externalLabel: "Explore Endureluxe",
+    tagline: "Community-driven fitness transformation.",
+  },
+];
 
 const statusOrder: VentureStatus[] = ["Active", "In development"];
 
@@ -254,7 +256,7 @@ const VenturesPage: NextPage = () => {
             );
           })}
 
-          {/* Cross-venture CTAs: Blog + Downloads (internal, not dead) */}
+          {/* Cross-venture CTAs: Blog + Downloads (internal) */}
           <section className="mt-10 mb-4 rounded-2xl border border-slate-800 bg-slate-950/80 p-7 md:p-8 text-center">
             <h2 className="text-lg md:text-xl font-semibold text-slate-50 mb-3">
               Want to explore the thinking and tools behind these ventures?
@@ -285,10 +287,6 @@ const VenturesPage: NextPage = () => {
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-
-            <p className="mt-4 text-[11px] text-slate-500">
-              These routes are internal to this site. If they don&apos;t resolve, the problem is routing, not the links.
-            </p>
           </section>
         </div>
       </div>
