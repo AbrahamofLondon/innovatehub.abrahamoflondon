@@ -3,14 +3,37 @@ import * as React from "react";
 import Head from "next/head";
 import Layout from "@/components/Layout";
 import { getPageTitle } from "@/lib/siteConfig";
-import { Moon, SunMedium } from "lucide-react";
+import { Moon, SunMedium, ChevronDown, ChevronUp } from "lucide-react";
+
+const PRINCIPLES = [
+  {
+    title: "Truth Before Tactics",
+    description: "We fix fundamentals before we chase scale. Confusion can’t be optimised."
+  },
+  {
+    title: "Reality-Based Design",
+    description: "We build for real markets, real people, and real constraints—not pitch-deck fantasies."
+  },
+  {
+    title: "Data-Informed Wisdom",
+    description: "We respect numbers, but we refuse to outsource judgement to them."
+  },
+  {
+    title: "Purposeful Adversity",
+    description: "We turn your scars into strategy—experience becomes a competitive advantage."
+  },
+  {
+    title: "Legacy Mindset",
+    description: "We optimise for work that outlives you, not for a news cycle."
+  },
+];
 
 const InnovateHubAboutPage = (): JSX.Element => {
   const pageTitle = "About InnovateHub";
   const [isDark, setIsDark] = React.useState(true);
   const [mounted, setMounted] = React.useState(false);
+  const [showOrigin, setShowOrigin] = React.useState(false);
 
-  // Theme management
   React.useEffect(() => {
     setMounted(true);
     try {
@@ -38,7 +61,6 @@ const InnovateHubAboutPage = (): JSX.Element => {
     });
   };
 
-  // Avoid hydration mismatch
   if (!mounted) {
     return (
       <Layout title={pageTitle}>
@@ -47,8 +69,7 @@ const InnovateHubAboutPage = (): JSX.Element => {
     );
   }
 
-  // Theme classes
-  const shellClass = isDark 
+  const shellClass = isDark
     ? "min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-slate-100"
     : "min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-900";
 
@@ -67,23 +88,19 @@ const InnovateHubAboutPage = (): JSX.Element => {
         <title>{getPageTitle(pageTitle)}</title>
         <meta
           name="description"
-          content="InnovateHub transforms promising ideas into enduring ventures. We provide the strategic clarity and disciplined execution that turns vision into viable, lasting impact."
+          content="InnovateHub transforms serious ideas into enduring ventures with strategic clarity, disciplined execution, and principled support."
         />
         <meta name="theme-color" content={isDark ? "#0f172a" : "#f7f5ee"} />
       </Head>
 
       <div className={shellClass}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           {/* Header with theme toggle */}
-          <div className="flex items-start justify-between gap-4 mb-12">
-            <div>
-              <p className={`text-sm font-semibold uppercase tracking-[0.2em] ${accentTextClass}`}>
-                Strategic Innovation
-              </p>
-            </div>
+          <div className="flex items-start justify-between gap-4 mb-10">
+            <p className={`text-xs sm:text-sm font-semibold uppercase tracking-[0.24em] ${accentTextClass}`}>
+              Strategic Innovation • Principled Execution
+            </p>
 
-            {/* Theme Toggle */}
             <button
               type="button"
               onClick={toggleTheme}
@@ -97,227 +114,289 @@ const InnovateHubAboutPage = (): JSX.Element => {
               {isDark ? (
                 <>
                   <SunMedium className="h-4 w-4" />
-                  <span>Light Mode</span>
+                  <span>Light mode</span>
                 </>
               ) : (
                 <>
                   <Moon className="h-4 w-4" />
-                  <span>Dark Mode</span>
+                  <span>Dark mode</span>
                 </>
               )}
             </button>
           </div>
 
-          {/* Hero Section */}
-          <header className="text-center mb-16">
-            <h1 className={`font-serif text-4xl md:text-5xl font-bold mb-6 ${primaryTextClass}`}>
-              Where Ideas Mature Into Enduring Ventures
+          {/* Hero */}
+          <header className="mb-10">
+            <h1 className={`font-serif text-4xl md:text-5xl font-bold mb-4 ${primaryTextClass}`}>
+              Where serious ideas mature into enduring ventures.
             </h1>
-            <p className={`text-xl leading-relaxed ${secondaryTextClass}`}>
-              InnovateHub is where promising concepts evolve beyond pitch decks into durable products, 
-              viable services, and systems built to withstand real-world pressures.
+            <p className={`text-lg md:text-xl max-w-3xl ${secondaryTextClass}`}>
+              InnovateHub is a build-space for founders, leaders, and institutions who want clear thinking,
+              disciplined execution, and integrity at the core of what they build.
             </p>
           </header>
 
-          <div className="prose prose-lg max-w-none">
-            
-            {/* The Problem Section */}
-            <section className="mb-16">
-              <h2 className={`text-3xl font-bold mb-6 ${primaryTextClass}`}>The Real Obstacle to Innovation</h2>
-              <p className={`text-lg mb-6 ${secondaryTextClass}`}>
-                Most ventures don't fail due to lack of effort or intelligence. They collapse under systems that prioritize:
+          {/* At a glance card */}
+          <section className={`mb-12 rounded-2xl border ${cardClass} p-6 md:p-7`}>
+            <div className="grid md:grid-cols-3 gap-6 items-start text-sm md:text-base">
+              <div>
+                <h3 className={`text-xs font-semibold uppercase tracking-wide mb-2 ${secondaryTextClass}`}>
+                  In 15 seconds
+                </h3>
+                <p className={secondaryTextClass}>
+                  We help you turn conviction into a venture that can survive pressure—regulatory, political, or market—
+                  without asking you to compromise your values.
+                </p>
+              </div>
+              <div>
+                <h3 className={`text-xs font-semibold uppercase tracking-wide mb-2 ${secondaryTextClass}`}>
+                  Built for
+                </h3>
+                <ul className={`space-y-1 ${secondaryTextClass}`}>
+                  <li>• Founders in complex markets</li>
+                  <li>• Leaders stewarding high-trust brands</li>
+                  <li>• Builders tired of hype with no backbone</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className={`text-xs font-semibold uppercase tracking-wide mb-2 ${secondaryTextClass}`}>
+                  What changes
+                </h3>
+                <ul className={`space-y-1 ${secondaryTextClass}`}>
+                  <li>• Fewer guesses, more clarity</li>
+                  <li>• Less noise, tighter execution</li>
+                  <li>• Strategy anchored in integrity</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Main body */}
+          <div className="prose prose-invert prose-lg max-w-none dark:prose-invert">
+            {/* The Problem */}
+            <section className="mb-14" id="problem">
+              <h2 className={`text-2xl md:text-3xl font-bold mb-4 ${primaryTextClass}`}>
+                The real obstacle to innovation
+              </h2>
+              <p className={`text-lg mb-4 ${secondaryTextClass}`}>
+                Most ventures don’t die for lack of effort. They die under systems that quietly reward the wrong things:
               </p>
-              <ul className={`list-disc list-inside space-y-2 mb-6 ${secondaryTextClass}`}>
-                <li>Short-term metrics over sustainable growth</li>
-                <li>Theoretical advice from those who've never borne real risk</li>
-                <li>Superficial engagement that rewards visibility over substance</li>
-                <li>Cultures that celebrate exhaustion without teaching endurance</li>
+              <ul className={`list-disc list-inside space-y-2 mb-4 ${secondaryTextClass}`}>
+                <li>Short-term optics instead of durable growth</li>
+                <li>Theory from people who never carried real risk</li>
+                <li>Visibility over value, noise over substance</li>
+                <li>Cultures that glorify burnout but never teach endurance</li>
               </ul>
               <p className={`text-lg ${secondaryTextClass}`}>
-                We've witnessed this pattern across contexts—from Nigerian boardrooms where potential was stifled by corruption, 
-                to UK investment circles where compelling narratives never materialized into backing, 
-                to purpose-driven communities that championed vision without building the necessary infrastructure.
+                I’ve seen this play out in Nigerian boardrooms distorted by politics, UK investment rooms
+                where strong narratives never translated into backing, and purpose-driven spaces with heart
+                but no infrastructure.
               </p>
-              <p className={`text-lg font-semibold mt-6 ${accentTextClass}`}>
-                InnovateHub exists as a counterpoint—a space where conviction, capability, and character converge.
-              </p>
-            </section>
-
-            {/* Origin Story */}
-            <section className={`mb-16 rounded-2xl p-8 shadow-sm border ${cardClass}`}>
-              <h2 className={`text-3xl font-bold mb-6 ${primaryTextClass}`}>Our Genesis: A Response to Systemic Failure</h2>
-              <p className={`text-lg mb-4 ${secondaryTextClass}`}>
-                Before this platform had a name, it was forged through years of observing systemic gaps:
-              </p>
-              <ul className={`list-disc list-inside space-y-2 mb-6 ${secondaryTextClass}`}>
-                <li>Attempting serious ventures in environments that rewarded shortcuts</li>
-                <li>Sacrificing opportunities by refusing to compromise ethical standards</li>
-                <li>Watching exceptional talent disappear due to lack of principled support</li>
-              </ul>
-              <p className={`text-lg mb-4 ${secondaryTextClass}`}>
-                Eventually, the choice became clear: adapt to the existing broken system or build a better alternative.
-              </p>
-              <p className={`text-lg font-semibold ${accentTextClass}`}>
-                InnovateHub represents our commitment to the latter path.
+              <p className={`mt-4 text-lg font-semibold ${accentTextClass}`}>
+                InnovateHub exists as a counterpoint—a place where conviction, capability, and character are non-negotiable.
               </p>
             </section>
 
-            {/* What We Do */}
-            <section className="mb-16">
-              <h2 className={`text-3xl font-bold mb-8 ${primaryTextClass}`}>Our Approach: Three Pillars of Transformation</h2>
-              
-              <div className="grid md:grid-cols-3 gap-8 mb-12">
-                <div className={`rounded-xl p-6 shadow-sm border hover:shadow-md transition-shadow ${cardClass}`}>
-                  <h3 className={`text-xl font-bold mb-4 ${primaryTextClass}`}>Strategic Clarity</h3>
-                  <p className={`mb-4 ${secondaryTextClass}`}>
-                    We guide you through the foundational questions that separate enduring ventures from temporary experiments:
+            {/* Origin Story – collapsible */}
+            <section className="mb-14">
+              <button
+                type="button"
+                onClick={() => setShowOrigin((v) => !v)}
+                className={`w-full flex items-center justify-between rounded-2xl border px-5 py-4 text-left ${cardClass}`}
+              >
+                <div>
+                  <h2 className={`text-xl md:text-2xl font-bold ${primaryTextClass}`}>
+                    Founder’s note: why InnovateHub had to exist
+                  </h2>
+                  <p className={`mt-1 text-sm md:text-base ${secondaryTextClass}`}>
+                    Years of watching good people and good ideas get crushed by bad systems forced a decision:
+                    adapt to the game—or build a different table.
                   </p>
-                  <ul className={`list-disc list-inside space-y-1 text-sm ${secondaryTextClass}`}>
-                    <li>Who truly benefits from this solution?</li>
-                    <li>What core problem are we actually addressing?</li>
-                    <li>Do the economics work beyond theoretical models?</li>
-                    <li>How does this scale sustainably over decades?</li>
+                </div>
+                {showOrigin ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+              </button>
+
+              {showOrigin && (
+                <div className={`mt-4 rounded-2xl border p-6 md:p-7 ${cardClass}`}>
+                  <p className={`text-lg mb-4 ${secondaryTextClass}`}>
+                    Before InnovateHub had a name, it was a pattern. Serious ventures trying to grow in
+                    environments that rewarded shortcuts. Deals walked away from because the price of entry was
+                    moral compromise. Brilliant people burning out or disappearing because they had no principled support.
+                  </p>
+                  <p className={`text-lg mb-4 ${secondaryTextClass}`}>
+                    Eventually, the line became clear: either play along with systems that treat people as expendable,
+                    or build an alternative for those who refuse to play that game.
+                  </p>
+                  <p className={`text-lg font-semibold ${accentTextClass}`}>
+                    InnovateHub is that alternative—a working lab for people who still believe integrity and excellence
+                    belong in the same sentence.
+                  </p>
+                </div>
+              )}
+            </section>
+
+            {/* Our Approach – three pillars */}
+            <section className="mb-14" id="approach">
+              <h2 className={`text-2xl md:text-3xl font-bold mb-6 ${primaryTextClass}`}>
+                How we work with you: three pillars
+              </h2>
+
+              <div className="grid md:grid-cols-3 gap-6 mb-6">
+                {/* Strategic Clarity */}
+                <div className={`rounded-xl p-6 border hover:shadow-md transition-shadow ${cardClass}`}>
+                  <h3 className={`text-lg font-bold mb-3 ${primaryTextClass}`}>Strategic clarity</h3>
+                  <p className={`mb-3 text-sm ${secondaryTextClass}`}>
+                    We strip away fog and ask the questions most people avoid:
+                  </p>
+                  <ul className={`list-disc list-inside space-y-1 text-xs md:text-sm ${secondaryTextClass}`}>
+                    <li>Who genuinely wins if this works?</li>
+                    <li>What problem are we *actually* solving?</li>
+                    <li>Can the economics survive contact with reality?</li>
+                    <li>Does this still make sense 10–20 years out?</li>
                   </ul>
-                  <p className={`text-sm mt-4 font-semibold ${accentTextClass}`}>
-                    Substance over spectacle. Precision over platitudes.
+                  <p className={`mt-3 text-xs font-semibold ${accentTextClass}`}>
+                    Less theatre. More truth.
                   </p>
                 </div>
 
-                <div className={`rounded-xl p-6 shadow-sm border hover:shadow-md transition-shadow ${cardClass}`}>
-                  <h3 className={`text-xl font-bold mb-4 ${primaryTextClass}`}>Disciplined Execution</h3>
-                  <p className={`mb-4 ${secondaryTextClass}`}>
-                    While inspiration provides the spark, discipline builds the fire. We focus on:
+                {/* Disciplined Execution */}
+                <div className={`rounded-xl p-6 border hover:shadow-md transition-shadow ${cardClass}`}>
+                  <h3 className={`text-lg font-bold mb-3 ${primaryTextClass}`}>Disciplined execution</h3>
+                  <p className={`mb-3 text-sm ${secondaryTextClass}`}>
+                    We turn intent into momentum with operating rhythms that survive busy seasons and bad weeks.
                   </p>
-                  <ul className={`list-disc list-inside space-y-1 text-sm ${secondaryTextClass}`}>
-                    <li>Actionable roadmaps with measurable milestones</li>
-                    <li>Operating rhythms that outlast fleeting motivation</li>
+                  <ul className={`list-disc list-inside space-y-1 text-xs md:text-sm ${secondaryTextClass}`}>
+                    <li>Actionable roadmaps, not abstract decks</li>
+                    <li>Clear milestones and honest reviews</li>
                     <li>Progress within constraints, not perfection in theory</li>
                   </ul>
-                  <p className={`text-sm mt-4 font-semibold ${accentTextClass}`}>
-                    We measure progress in shipped value, not accumulated plans.
+                  <p className={`mt-3 text-xs font-semibold ${accentTextClass}`}>
+                    We measure in shipped value, not meetings.
                   </p>
                 </div>
 
-                <div className={`rounded-xl p-6 shadow-sm border hover:shadow-md transition-shadow ${cardClass}`}>
-                  <h3 className={`text-xl font-bold mb-4 ${primaryTextClass}`}>Ethical Foundation</h3>
-                  <p className={`mb-4 ${secondaryTextClass}`}>
-                    While faith informs our principles, integrity defines our practice. This manifests as:
+                {/* Ethical Foundation */}
+                <div className={`rounded-xl p-6 border hover:shadow-md transition-shadow ${cardClass}`}>
+                  <h3 className={`text-lg font-bold mb-3 ${primaryTextClass}`}>Ethical foundation</h3>
+                  <p className={`mb-3 text-sm ${secondaryTextClass}`}>
+                    Our worldview is faith-shaped, but our practice is simple: no hidden games.
                   </p>
-                  <ul className={`list-disc list-inside space-y-1 text-sm ${secondaryTextClass}`}>
-                    <li>Transparent processes without hidden agendas</li>
-                    <li>Growth through value creation, not exploitation</li>
-                    <li>Solutions that respect all stakeholders</li>
+                  <ul className={`list-disc list-inside space-y-1 text-xs md:text-sm ${secondaryTextClass}`}>
+                    <li>Transparent terms and expectations</li>
+                    <li>Value creation over exploitation</li>
+                    <li>Respect for every stakeholder at the table</li>
                   </ul>
-                  <p className={`text-sm mt-4 font-semibold ${accentTextClass}`}>
-                    True innovation elevates people; it never compromises their dignity.
+                  <p className={`mt-3 text-xs font-semibold ${accentTextClass}`}>
+                    Real innovation lifts people; it doesn’t use them.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* Target Audience */}
-            <section className={`mb-16 rounded-2xl p-8 ${isDark ? 'bg-slate-800 text-slate-200' : 'bg-slate-900 text-white'}`}>
-              <h2 className="text-3xl font-bold text-white mb-6">Our Community: Builders Who Value Substance</h2>
-              <p className="text-lg mb-6">
-                This space serves those who:
+            {/* Who we serve */}
+            <section className={`mb-14 rounded-2xl p-8 ${isDark ? "bg-slate-800 text-slate-200" : "bg-slate-900 text-white"}`}>
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Who InnovateHub is for</h2>
+              <p className="text-lg mb-4">
+                This is not a general-purpose accelerator. It’s a working room for people who:
               </p>
               <ul className="list-disc list-inside space-y-2 mb-6">
-                <li>Seek alignment between their professed values and daily practice</li>
-                <li>Possess experience but require sharper strategic frameworks</li>
-                <li>Refuse to sacrifice integrity for apparent expediency</li>
-                <li>Operate in challenging contexts and need practical, not theoretical, support</li>
+                <li>Want their values and their business model to say the same thing</li>
+                <li>Have experience, but need sharper strategic scaffolding</li>
+                <li>Operate in messy or constrained environments and still want to do work they can respect</li>
+                <li>Won’t trade integrity for short-term optics</li>
               </ul>
-              <div className={`rounded-lg p-4 mt-6 ${isDark ? 'bg-amber-900/30 border-amber-700' : 'bg-amber-50 border-amber-200'}`}>
-                <p className={`font-semibold ${isDark ? 'text-amber-200' : 'text-amber-800'}`}>
-                  If you're seeking shortcuts, superficial validation, or success without substance, we cannot help you.
+              <div
+                className={`rounded-lg border p-4 mt-4 ${
+                  isDark ? "bg-amber-900/30 border-amber-700" : "bg-amber-50 border-amber-200"
+                }`}
+              >
+                <p className={`${isDark ? "text-amber-200" : "text-amber-900"} font-semibold`}>
+                  If you’re looking for shortcuts, hype, or polite validation, this probably isn’t your room.
                 </p>
-                <p className={`mt-2 ${isDark ? 'text-amber-200' : 'text-amber-800'}`}>
-                  If you're committed to building with intention, integrity, and long-term perspective, you've found your people.
+                <p className={`mt-1 ${isDark ? "text-amber-200" : "text-amber-900"}`}>
+                  If you’re ready to build with intention, integrity, and a long view, you’re in the right place.
                 </p>
               </div>
             </section>
 
-            {/* Operating Principles */}
-            <section className="mb-16">
-              <h2 className={`text-3xl font-bold mb-8 ${primaryTextClass}`}>Our Guiding Principles</h2>
-              <div className="space-y-6">
-                {[
-                  {
-                    title: "Truth Before Tactics",
-                    description: "We address foundational issues before pursuing scale. Confusion cannot be optimized—only clarified."
-                  },
-                  {
-                    title: "Reality-Based Design",
-                    description: "We build for actual market conditions, human limitations, and inevitable challenges—not ideal scenarios."
-                  },
-                  {
-                    title: "Data-Informed Wisdom",
-                    description: "While we respect quantitative insights, we balance them with qualitative discernment and experience."
-                  },
-                  {
-                    title: "Purposeful Adversity",
-                    description: "We help transform past challenges into competitive advantages and sources of resilience."
-                  },
-                  {
-                    title: "Legacy Mindset",
-                    description: "We prioritize sustainable impact that compounds over time above temporary visibility or viral moments."
-                  }
-                ].map((principle, index) => (
-                  <div key={index} className={`border-l-4 pl-6 py-2 rounded-r-lg transition-colors ${accentBorderClass} ${isDark ? 'hover:bg-slate-800/50' : 'hover:bg-blue-50'}`}>
-                    <h3 className={`text-xl font-bold mb-2 ${primaryTextClass}`}>{principle.title}</h3>
-                    <p className={secondaryTextClass}>{principle.description}</p>
+            {/* Operating principles */}
+            <section className="mb-14" id="principles">
+              <h2 className={`text-2xl md:text-3xl font-bold mb-4 ${primaryTextClass}`}>
+                The InnovateHub operating code
+              </h2>
+              <p className={`mb-5 text-lg ${secondaryTextClass}`}>
+                These are not slogans. They are the guardrails for how we work with you and how we expect you to build.
+              </p>
+              <div className="space-y-4">
+                {PRINCIPLES.map((p, idx) => (
+                  <div
+                    key={p.title}
+                    className={`border-l-4 pl-5 py-2 rounded-r-lg transition-colors ${accentBorderClass} ${
+                      isDark ? "hover:bg-slate-800/50" : "hover:bg-blue-50"
+                    }`}
+                  >
+                    <div className="flex items-baseline gap-3">
+                      <span className={`text-xs font-mono ${accentTextClass}`}>{String(idx + 1).padStart(2, "0")}</span>
+                      <h3 className={`text-lg font-bold ${primaryTextClass}`}>{p.title}</h3>
+                    </div>
+                    <p className={`mt-1 ${secondaryTextClass}`}>{p.description}</p>
                   </div>
                 ))}
               </div>
             </section>
 
-            {/* Ecosystem Context */}
-            <section className={`mb-16 rounded-2xl p-8 ${isDark ? 'bg-slate-800/50' : 'bg-blue-50'}`}>
-              <h2 className={`text-3xl font-bold mb-6 ${primaryTextClass}`}>Our Place in the Broader Ecosystem</h2>
-              <p className={`text-lg mb-6 ${secondaryTextClass}`}>
-                InnovateHub functions as a vital component within a cohesive framework dedicated to principled impact:
+            {/* Ecosystem context */}
+            <section className={`mb-14 rounded-2xl p-8 ${isDark ? "bg-slate-800/50" : "bg-blue-50"}`}>
+              <h2 className={`text-2xl md:text-3xl font-bold mb-4 ${primaryTextClass}`}>
+                Where InnovateHub sits in the wider work
+              </h2>
+              <p className={`text-lg mb-5 ${secondaryTextClass}`}>
+                InnovateHub is one part of a larger architecture designed to turn conviction into long-term impact:
               </p>
-              <div className="grid md:grid-cols-2 gap-6 mb-8">
-                <div className={`rounded-lg p-6 hover:shadow-md transition-shadow ${cardClass}`}>
-                  <h3 className={`font-bold mb-2 ${primaryTextClass}`}>Abraham of London</h3>
-                  <p className={`text-sm ${secondaryTextClass}`}>The philosophical foundation and narrative framework.</p>
+              <div className="grid md:grid-cols-4 gap-4 mb-6 text-sm">
+                <div className={`rounded-xl p-4 border ${cardClass}`}>
+                  <h3 className={`font-semibold mb-1 ${primaryTextClass}`}>Abraham of London</h3>
+                  <p className={secondaryTextClass}>The narrative layer: philosophy, story, and lens.</p>
                 </div>
-                <div className={`rounded-lg p-6 hover:shadow-md transition-shadow ${cardClass}`}>
-                  <h3 className={`font-bold mb-2 ${primaryTextClass}`}>Alomarada</h3>
-                  <p className={`text-sm ${secondaryTextClass}`}>Strategic advisory and market-entry expertise for institutional impact.</p>
+                <div className={`rounded-xl p-4 border ${cardClass}`}>
+                  <h3 className={`font-semibold mb-1 ${primaryTextClass}`}>Alomarada</h3>
+                  <p className={secondaryTextClass}>Strategic advisory and market-entry for institutions.</p>
                 </div>
-                <div className={`rounded-lg p-6 border-2 hover:shadow-md transition-shadow ${accentBorderClass} ${cardClass}`}>
-                  <h3 className={`font-bold mb-2 ${primaryTextClass}`}>InnovateHub</h3>
-                  <p className={`text-sm ${secondaryTextClass}`}>The practical engine where ideas are tested, refined, and brought to life.</p>
+                <div className={`rounded-xl p-4 border-2 ${accentBorderClass} ${cardClass}`}>
+                  <h3 className={`font-semibold mb-1 ${primaryTextClass}`}>InnovateHub</h3>
+                  <p className={secondaryTextClass}>The build room where ideas are tested, refined, and launched.</p>
                 </div>
-                <div className={`rounded-lg p-6 hover:shadow-md transition-shadow ${cardClass}`}>
-                  <h3 className={`font-bold mb-2 ${primaryTextClass}`}>Endureluxe</h3>
-                  <p className={`text-sm ${secondaryTextClass}`}>The embodiment of sustainable performance and enduring quality.</p>
+                <div className={`rounded-xl p-4 border ${cardClass}`}>
+                  <h3 className={`font-semibold mb-1 ${primaryTextClass}`}>Endureluxe</h3>
+                  <p className={secondaryTextClass}>A proof point: durable, high-performance products in the wild.</p>
                 </div>
               </div>
-              <p className={`text-lg font-semibold text-center ${accentTextClass}`}>
-                Together, we support principled builders in creating work that outlives them.
+              <p className={`text-center text-sm font-semibold ${accentTextClass}`}>
+                Together, they form a pipeline—from idea, to strategy, to build, to embodied reality.
               </p>
             </section>
 
             {/* Final CTA */}
-            <section className={`text-center rounded-2xl p-12 ${isDark ? 'bg-gradient-to-r from-slate-800 to-blue-900' : 'bg-gradient-to-r from-slate-900 to-blue-900'} text-white`}>
-              <h2 className="text-3xl font-bold text-white mb-6">Join Us in Building What Matters</h2>
-              <p className="text-lg text-slate-200 mb-6">
-                Your presence here suggests you're carrying something meaningful—a concept you've nurtured, 
-                a solution that addresses a genuine need, a vision that persists despite obstacles.
+            <section
+              className={`mb-4 text-center rounded-2xl p-10 ${
+                isDark ? "bg-gradient-to-r from-slate-800 to-blue-900" : "bg-gradient-to-r from-slate-900 to-blue-900"
+              } text-white`}
+            >
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">If you’re carrying a serious idea, you don’t have to build alone.</h2>
+              <p className="text-lg mb-4 text-slate-200">
+                You might be holding a concept, a product in motion, or a venture that needs a reset.
+                Our role is not to rescue you, but to stand alongside you with clear thinking, honest feedback,
+                and systems that respect both your vision and your values.
               </p>
-              <p className="text-lg text-slate-200 mb-8">
-                We don't offer rescue or easy answers. We provide honest perspective, strategic clarity, 
-                practical tools, and committed partnership as you transform your vision into enduring impact.
+              <p className="text-base text-slate-200 mb-6">
+                If that sounds like the kind of room you’ve been looking for, welcome to InnovateHub.
               </p>
-              <div className="bg-gradient-to-r from-blue-600 to-blue-700 inline-block rounded-xl px-8 py-4 shadow-2xl">
-                <p className="text-white font-bold text-xl">
-                  Welcome to InnovateHub—where innovation develops substance, not just visibility.
-                </p>
+              <div className="inline-flex rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-7 py-3 shadow-2xl">
+                <span className="text-sm md:text-base font-semibold tracking-wide uppercase">
+                  Start by mapping your next move
+                </span>
               </div>
             </section>
-
           </div>
         </div>
       </div>
